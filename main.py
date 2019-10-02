@@ -4,9 +4,9 @@ import subprocess
 import traceback
 
 import extra
+import update
 
 try:
-    import update
     update.GitSync()
 except Exception as e:
     input(traceback.format_exc())
