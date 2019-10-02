@@ -1,0 +1,12 @@
+{
+    "minecraft": "C:/Program Files (x86)/Minecraft Launcher/MinecraftLauncher.exe",
+    "repo": "/TheMerkyShadow/Project-Dawn/",
+    "exclude": [
+        "start.exe",
+        ".gitattributes",
+        ".gitignore",
+        "launcher_profiles.json",
+        "launcher_log.txt"
+    ],
+    "commit": "2feb4386eb33c2f48a94ee6395496fb0c83197af"
+}
