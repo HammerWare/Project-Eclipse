@@ -3,11 +3,11 @@
     "repo": "/TheMerkyShadow/Project-Dawn/",
     "exclude": [
         "pyexe.exe",
-		"pyexe.py",
+        "pyexe.py",
         ".gitattributes",
         ".gitignore",
         "launcher_profiles.json",
         "launcher_log.txt"
     ],
-    "commit": "83c1f4ef4ee5a3c174a11f34d201d4ae4cbbc6af"
+    "commit": "090cd35a526a308f9f4f24bd8e062b0f3ddee829"
 }
