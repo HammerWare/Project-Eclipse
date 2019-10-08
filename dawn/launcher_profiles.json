@@ -2,7 +2,7 @@
   "profiles" : {
     "forge" : {
       "icon" : "Furnace_On",
-      "javaDir" : "-Xmx3G",
+      "javaArgs" : "-Xmx3G",
       "lastUsed" : "2019-10-08T01:56:46.088Z",
       "lastVersionId" : "1.12.2-forge1.12.2-14.23.5.2847",
       "name" : "Dawn",
