@@ -3,7 +3,6 @@ import sys
 
 import json
 import wget
-import uuid
 import time
 import datetime
 
@@ -40,7 +39,7 @@ def GitDiff():
     new = json.load(urlopen(fetch))["commit"]["sha"]
     old = config(False)["commit"]      
     if( old == new ):
-        return None
+        return ( old, None, new )
     fetch = ( api +"compare/" +old +"..." +new )
     return ( old, json.load(urlopen(fetch))["files"], new )
     
