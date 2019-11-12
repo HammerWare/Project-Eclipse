@@ -37,8 +37,10 @@ def GitDiff():
     api = ( "https://api.github.com/repos" +repo ) 
     fetch = (api +"branches/master")  
     new = json.load(urlopen(fetch))["commit"]["sha"]
-    old = config(False)["commit"]      
-    if( old == new ):
+    old = config(False)["commit"]
+    if old == "":
+        old = new
+    elif( old == new ):
         return ( old, None, new )
     fetch = ( api +"compare/" +old +"..." +new )
     return ( old, json.load(urlopen(fetch))["files"], new )
