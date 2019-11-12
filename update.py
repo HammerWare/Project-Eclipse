@@ -30,7 +30,7 @@ def Minecraft(minecraft=""):
     minecraft = config(False)["minecraft"]        
     if not os.path.isfile(minecraft):
         minecraft = input("Enter Minecraft Launcher: ")
-    return Minecraft(minecraft)
+    return minecraft
 
 def GitDiff():    
     repo = config(False)["repo"]
