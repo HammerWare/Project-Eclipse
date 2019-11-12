@@ -3,8 +3,6 @@ import sys
 import subprocess
 import traceback
 
-import extra
-
 try:
     import update
     update.GitSync()
