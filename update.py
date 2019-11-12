@@ -64,9 +64,9 @@ def GitSync(backup=False):
                 temp = Path(wget.download(raw))
                 temp.replace(path)
             elif status == "renamed":
-                previous = file["previous_filename"]
+                previous = Path(file["previous_filename"])
                 if previous.is_file():
-                    old.replace(path)
+                    previous.replace(path)
             elif status == "removed":
                 if path.is_file():
                     path.unlink()
