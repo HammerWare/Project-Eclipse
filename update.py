@@ -4,40 +4,46 @@ import sys
 import json
 import wget
 import time
-import datetime
 
 from urllib.request import urlopen
 from pathlib import Path
 
-import traceback
+class Config():
+    def __init__(self,dir="config.json"):
+        self.Path = Path(dir)    
+        self.Table = self.Decode()   
+    def Decode(self):
+        return json.loads(self.Path.read_text())
+    def Encode(self):
+        return json.dumps(self.Table,indent=4)         
+    def __getitem__(self, item):
+        return self.Table[item]
+    def __setitem__(self, item, value):
+        self.Table[item] = value
+    def Close(self):
+        self.Path.write_text( self.Encode() )
+        
+CONFIG = Config()
 
 def notify(text,delay=2):
     print(text)
     time.sleep(delay)
     return
 
-def config(save,key=None,value=None):
-    file = Path("config.json")
-    decode = json.loads(file.read_text())
-    if save:
-        decode[key] = value            
-        encode = json.dumps(decode,indent=4)
-        file.write_text(encode)
-        decode = encode
-    return decode
-
-def Minecraft(minecraft=""):
-    minecraft = config(False)["minecraft"]        
+def Minecraft(minecraft=None):
+    if minecraft is None:
+        minecraft = CONFIG["minecraft"]
     if not os.path.isfile(minecraft):
-        minecraft = input("Enter Minecraft Launcher: ")
+        minecraft = input("Enter Minecraft Launcher: ") 
+        CONFIG["minecraft"] = minecraft
     return minecraft
 
 def GitDiff():    
-    repo = config(False)["repo"]
+    repo = CONFIG["repo"]
     api = ( "https://api.github.com/repos" +repo ) 
     fetch = (api +"branches/master")  
     new = json.load(urlopen(fetch))["commit"]["sha"]
-    old = config(False)["commit"]
+    old = CONFIG["commit"]
     if old == "":
         old = new
     elif( old == new ):
@@ -47,10 +53,9 @@ def GitDiff():
     
 def GitSync(backup=False):
     notify( "Verification Starting")
-    current = Minecraft()    
     old, diff, new = GitDiff()
     if diff:
-        exclude = config(False)["exclude"]
+        exclude = CONFIG["exclude"]
         for file in diff:
             name = file["filename"]
             path = Path(name)
@@ -76,7 +81,9 @@ def GitSync(backup=False):
                         parent.rmdir()
 
             print( status, name )
+
+
         
-    config(True, "minecraft", current )
-    config(True, "commit", new )
     notify( "Verification Complete!" )
+    CONFIG["commit"] = new    
+    CONFIG.Close()
