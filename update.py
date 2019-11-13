@@ -83,7 +83,6 @@ def GitSync(backup=False):
             print( status, name )
 
 
-        
     notify( "Verification Complete!" )
     CONFIG["commit"] = new    
     CONFIG.Close()
