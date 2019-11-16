@@ -68,7 +68,7 @@ def GitSync():
             parent = path.parent         
             raw = file["raw_url"]
             status = file["status"]
-            if name == exclude:
+            if name in exclude:
                 continue                
             parent.mkdir(parents=True, exist_ok=True)
             if status == "added" or status == "modified":              
@@ -86,7 +86,7 @@ def GitSync():
                         if empty:
                             parent.rmdir()
                             
-            if name == "config.json":
+            if name in config.json":
                 CONFIG["exclude"] = CONFIG["exclude"].Updated
                 
             print( status, name )
