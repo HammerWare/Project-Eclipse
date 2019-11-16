@@ -86,7 +86,7 @@ def GitSync():
                         if empty:
                             parent.rmdir()
                             
-            if name in "config.json":
+            if name in exclude:
                 CONFIG["exclude"] = CONFIG["exclude"].Updated
                 
             print( status, name )
