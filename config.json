@@ -1,5 +1,5 @@
 {
-    "minecraft": "C:/Program Files (x86)/Minecraft Launcher/MinecraftLauncher.exe",
+    "minecraft": "C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe",
     "repo": "/TheMerkyShadow/Project-Dawn/",
     "exclude": [
         "pyexe.exe",
