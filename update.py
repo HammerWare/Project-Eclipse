@@ -8,7 +8,7 @@ import time
 from urllib.request import urlopen
 from pathlib import Path
 
-def notify(text,delay=2):
+def notify(text,delay=3):
     print(text)
     time.sleep(delay)
     return
@@ -22,19 +22,20 @@ class JsonConfig():
     def Encode(self):
         return json.dumps(self.Table,indent=4)         
     def __getitem__(self, item):
-        return self.Table[item] 
+        ret = lambda: None
+        ret.Cached = self.Table[item]
+        ret.Updated = self.Decode()[item]
+        return ret
     def __setitem__(self, item, value):
-        self.Table[item] = value
+        self.Table[item] = value 
     def Close(self):
-        self.Path.write_text( self.Encode() )
-    def Reload(self):
-        return self.Decode()        
+        self.Path.write_text(self.Encode())       
 
 class Git():
     def __init__(self,CONFIG):
-        self.Repo = CONFIG["repo"]     
+        self.Repo = CONFIG["repo"].Cached
         self.Url = ( "https://api.github.com/repos" +self.Repo )
-        self.Old = CONFIG["commit"]
+        self.Old = CONFIG["commit"].Cached
         self.New = self.latest()
     def fetch(self,api):
         return json.load(urlopen(self.Url+api))
@@ -50,7 +51,7 @@ GIT = Git( CONFIG )
 
 def Minecraft(minecraft=None):
     if minecraft is None:
-        minecraft = CONFIG["minecraft"]
+        minecraft = CONFIG["minecraft"].Cached
     if not os.path.isfile(minecraft):
         minecraft = input("Enter Minecraft Launcher: ") 
         CONFIG["minecraft"] = minecraft
@@ -60,6 +61,7 @@ def GitSync():
     notify( "Verification Starting")
     diff = GIT.diff()
     if diff:
+        exclude = CONFIG["exclude"].Cached
         for file in diff:
             name = file["filename"]
             path = Path(name)
@@ -84,6 +86,9 @@ def GitSync():
                         if empty:
                             parent.rmdir()
                             
+            if name == "config.json":
+                CONFIG["exclude"] = CONFIG["exclude"].Updated
+                
             print( status, name )
 
     notify( "Verification Complete!" )
