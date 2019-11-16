@@ -84,10 +84,7 @@ def GitSync():
                     if parent.is_dir():
                         empty = list(os.scandir(parent)) == 0
                         if empty:
-                            parent.rmdir()
-                            
-            if name == "config.json":
-                CONFIG["exclude"] = CONFIG["exclude"].Updated
+                            parent.rmdir()   
                 
             print( status, name )
 
