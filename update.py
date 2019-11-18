@@ -1,5 +1,6 @@
 import os
 import sys
+
 import json
 import wget
 import time
@@ -7,83 +8,86 @@ import time
 from urllib.request import urlopen
 from pathlib import Path
 
-import logging
+def notify(text,delay=3):
+    print(text)
+    time.sleep(delay)
+    return
 
-logging.basicConfig(filename='log.txt', format='%(asctime)s %(message)s', filemode='a+')
-logs = logging.getLogger()
-logs.setLevel(logging.NOTSET)
-
-class JsonConfig:
-    def __init__(self, dir='config.json'):
-        self.Path = Path(dir)
+class JsonConfig():
+    def __init__(self,dir="config.json"):
+        self.Path = Path(dir)    
         self.Table = self.Decode()
     def Decode(self):
         return json.loads(self.Path.read_text())
     def Encode(self):
-        return json.dumps((self.Table), indent=4)
+        return json.dumps(self.Table,indent=4)         
     def __getitem__(self, item):
-        return self.Table[item]
+        ret = lambda: None
+        ret.Cached = self.Table[item]
+        ret.Updated = self.Decode()[item]
+        return ret
     def __setitem__(self, item, value):
-        self.Table[item] = value
-        self.Save()
-    def Reload(self):
-        self.Table = self.Decode()
-    def Save(self):
-        self.Path.write_text(self.Encode())
+        self.Table[item] = value 
+    def Close(self):
+        self.Path.write_text(self.Encode())       
 
-class Git:
-    def __init__(self, CONFIG):
-        self.Repo = CONFIG['repo']
-        self.Url = 'https://api.github.com/repos' + self.Repo
-        self.Old = CONFIG['commit']
+class Git():
+    def __init__(self,CONFIG):
+        self.Repo = CONFIG["repo"].Cached
+        self.Url = ( "https://api.github.com/repos" +self.Repo )
+        self.Old = CONFIG["commit"].Cached
         self.New = self.latest()
-        self.Verify()
-    def Verify(self):
-        if self.Old == '':
-            self.Old = self.New
-    def fetch(self, api):
-        return json.load(urlopen(self.Url + api))
+    def fetch(self,api):
+        return json.load(urlopen(self.Url+api))
     def latest(self):
-        return self.fetch('branches/master')['commit']['sha']
+        return self.fetch("branches/master")["commit"]["sha"]
     def diff(self):
-        return self.fetch('compare/' + self.Old + '...' + self.New)['files']
-
+        if self.Old == "" or self.Old == self.New:
+            return None
+        return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
+    
 CONFIG = JsonConfig()
-GIT = Git(CONFIG)
+GIT = Git( CONFIG )
+
+def Minecraft(minecraft=None):
+    if minecraft is None:
+        minecraft = CONFIG["minecraft"].Cached
+    if not os.path.isfile(minecraft):
+        minecraft = input("Enter Minecraft Launcher: ") 
+        CONFIG["minecraft"] = minecraft
+    return minecraft
 
 def GitSync():
-    logs.info('Verification Starting')
+    notify( "Verification Starting")
     diff = GIT.diff()
     if diff:
-        exclude = CONFIG['exclude']
+        exclude = CONFIG["exclude"].Cached
         for file in diff:
-            name = file['filename']
+            name = file["filename"]
             path = Path(name)
-            parent = path.parent
-            raw = file['raw_url']
-            status = file['status']
+            parent = path.parent         
+            raw = file["raw_url"]
+            status = file["status"]
             if name in exclude:
-                continue
+                continue                
             parent.mkdir(parents=True, exist_ok=True)
-            if status == 'added' or status == 'modified':
+            if status == "added" or status == "modified":              
                 temp = Path(wget.download(raw))
                 temp.replace(path)
-            elif status == 'renamed':
-                previous = Path(file['previous_filename'])
+            elif status == "renamed":
+                previous = Path(file["previous_filename"])
                 if previous.is_file():
                     previous.replace(path)
-                elif status == 'removed':
+                elif status == "removed":
                     if path.is_file():
                         path.unlink()
-            if parent.is_dir():
-                empty = list(os.scandir(parent)) == 0
-                if empty:
-                    parent.rmdir()
-                    
-            logs.info( status +", " +name )
+                    if parent.is_dir():
+                        empty = list(os.scandir(parent)) == 0
+                        if empty:
+                            parent.rmdir()   
+                
+            print( status, name )
 
-    if diff:
-        logs.info( GIT.Old +" to " +GIT.New )
-        
-    logs.info('Verification Complete!')    
-    CONFIG['commit'] = GIT.New
+    notify( "Verification Complete!" )
+    CONFIG["commit"] = GIT.New
+    CONFIG.Close()
