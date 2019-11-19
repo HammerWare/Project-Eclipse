@@ -7,9 +7,7 @@ from tkinter import *
 from tkinter import filedialog
 
 import update
-
-if not update.IsDev:
-    update.GitSync()
+update.GitSync()
 
 def Play(self):
     started = subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
