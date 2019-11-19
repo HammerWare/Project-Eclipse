@@ -11,8 +11,8 @@ from tkinter import filedialog
 from urllib.request import urlopen
 from pathlib import Path
 
-import tempfile
 import shutil
+import tempfile
 
 if getattr( sys, 'frozen', False ):
     location = sys._MEIPASS
