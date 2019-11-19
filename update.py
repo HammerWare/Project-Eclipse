@@ -11,12 +11,6 @@ from tkinter import filedialog
 from urllib.request import urlopen
 from pathlib import Path
 
-import shutil
-import tempfile
-
-if getattr( sys, 'frozen', False ):
-    location = sys._MEIPASS
-
 class JsonConfig():
     def __init__(self,dir="config.json"):
         self.Path = Path(dir)
@@ -60,7 +54,7 @@ def Minecraft(minecraft=""):
     elif not os.path.isfile(minecraft):
         options = {}
         options['initialdir'] = os.environ['ProgramFiles(x86)']
-        options['title'] = 'Minecraft'
+        options['title'] = 'Minecraft Folder'
         options['mustexist'] = True
         dir = (filedialog.askdirectory)(**options)
         minecraft = dir + '/MinecraftLauncher.exe'
@@ -108,16 +102,17 @@ def GitSync():
     CONFIG["commit"] = GIT.New
     CONFIG.Write()
     return True
-
+    
 if __name__ == '__main__':
     
+    location = sys._MEIPASSW
     for file in GIT.contents():
         name = file["name"]
         url = file["download_url"]
         move = os.path.join(location,name)
         if ".py" in name:
             wget.download(url,move)
-
+            
     sys.path.append(location)    
     import main
 
