@@ -11,6 +11,9 @@ from tkinter import filedialog
 from urllib.request import urlopen
 from pathlib import Path
 
+def IsDev():
+    return getattr(sys, 'frozen', True)
+
 class JsonConfig():
     def __init__(self,dir="config.json"):
         self.Path = Path(dir)
@@ -102,10 +105,10 @@ def GitSync():
     CONFIG["commit"] = GIT.New
     CONFIG.Write()
     return True
-    
+   
 if __name__ == '__main__':
     
-    try:
+    if not IsDev():
         
         location = sys._MEIPASS
         sys.path.append(location)
@@ -117,9 +120,8 @@ if __name__ == '__main__':
             if not name.endswith(".exe") and obj == "file":
                 wget.download(url,os.path.join(location,name))
                 
-    except Exception:
+    else:
         print("Developer Version")
-        pass
                
     import main
 
