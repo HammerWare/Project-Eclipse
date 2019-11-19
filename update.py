@@ -23,16 +23,18 @@ class JsonConfig():
     def __init__(self,dir="config.json"):
         self.Path = Path(dir)
         self.Reload()
-    def Read(self):
-        return json.loads(self.Path.read_text())
     def Reload(self):
-        self.Table = self.Read()           
+        self.Table = self.Decode()
+    def Decode(self):
+        return json.loads(self.Path.read_text())
+    def Encode(self):
+        return json.dumps(self.Table,indent=4)         
     def __getitem__(self, item):
-        return self.Table()[item]
+        return self.Decode()[item]
     def __setitem__(self, item, value):
-        self.Table[item] = value     
-    def Write(self):  
-        self.Path.write_text(json.dumps(self.Table,indent=4))       
+        self.Table[item] = value
+    def Write(self):
+        self.Path.write_text(self.Encode())       
 
 class Git():
     def __init__(self,CONFIG):
@@ -100,8 +102,7 @@ def GitSync():
                         parent.rmdir()
                         
             if name == "config.json":
-                CONFIG["exclude"] = CONFIG.Read()["exclude"]
-                
+                CONFIG["exclude"] = CONFIG.Decode()["exclude"]
             print( status, name )
 
     notify( "Verification Complete!" )
