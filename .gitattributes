@@ -1,2 +1,2 @@
 .* export-ignore
-.py* export-ignore
+*.py export-ignore
