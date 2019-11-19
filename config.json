@@ -3,8 +3,9 @@
     "repo": "/TheMerkyShadow/Project-Dawn/",
     "exclude": [
 		"dawn.exe",
-        ".git",
-        ".py",
+        ".gitignore",
+        ".gitattributes",
+		".py",
         "launcher_"
     ],
     "commit": ""
