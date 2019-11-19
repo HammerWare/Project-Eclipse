@@ -6,6 +6,10 @@ import traceback
 from tkinter import *
 from tkinter import filedialog
 
+import playsound
+from playsound import playsound
+playsound('startup.mp3')
+
 import update
 
 def Play(self):

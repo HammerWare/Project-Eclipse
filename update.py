@@ -103,6 +103,7 @@ def GitSync():
                         
             if name == "config.json":
                 CONFIG["exclude"] = CONFIG.Decode()["exclude"]
+                
             print( status, name )
 
     notify( "Verification Complete!" )
