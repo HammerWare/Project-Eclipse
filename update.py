@@ -82,7 +82,7 @@ def GitSync():
             if name in exclude:
                 continue                
             parent.mkdir(parents=True, exist_ok=True)
-            if status == "added" or status == "
+            if status == "added" or status == "modified":
                 temp = Path(wget.download(raw))
                 temp.replace(path)
             elif status == "renamed":
