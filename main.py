@@ -6,14 +6,12 @@ import traceback
 from tkinter import *
 from tkinter import filedialog
 
-import playsound
-from playsound import playsound
-playsound('startup.mp3')
-
 import update
 
-import importlib
-importlib.reload(update)
+import playsound
+from playsound import playsound
+
+playsound( os.path.join(update.location,"startup.mp3") )
 
 def Play(self):
     update.GitSync()

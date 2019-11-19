@@ -14,6 +14,12 @@ from pathlib import Path
 import tempfile
 import shutil
 
+if getattr( sys, 'frozen', False ) :
+    location = sys._MEIPASS
+else :
+    location = tempfile.mkdtemp()
+    print( location )
+
 def notify(text,delay=3):
     print(text)
     time.sleep(delay)
@@ -113,12 +119,6 @@ def GitSync():
 
 if __name__ == '__main__':
     
-    try:
-        location = sys._MEIPASS
-    except Exception:
-        location = tempfile.mkdtemp()
-        print( location )
-        
     for file in GIT.contents():
         name = file["name"]
         url = file["download_url"]
