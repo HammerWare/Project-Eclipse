@@ -7,9 +7,9 @@ from tkinter import *
 from tkinter import filedialog
 
 import update
+update.GitSync()
 
 def Play(self):
-    update.GitSync()
     started = subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
     if started:
         self.config(state='disabled')
