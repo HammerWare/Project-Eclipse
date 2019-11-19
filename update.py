@@ -78,6 +78,7 @@ def GitSync():
         for file in diff:
             name = file["filename"]
             path = Path( name )
+            old = Path(file["previous_filename"])            
             parent = path.parent         
             raw = file["raw_url"]
             status = file["status"]
@@ -85,18 +86,17 @@ def GitSync():
                 continue                
             parent.mkdir(parents=True, exist_ok=True)
             if status == "added" or status == "modified" or status == "renamed":
-                previous = Path( file["previous_filename"] or "" )
-                if previous.is_file():
-                    previous.unlink()
+                if old.is_file():
+                    old.unlink()
                 temp = Path(wget.download(raw))
                 temp.replace(path)
-                elif status == "removed":
-                    if path.is_file():
-                        path.unlink()
-                    if parent.is_dir():
-                        empty = list(os.scandir(parent)) == 0
-                        if empty:
-                            parent.rmdir()   
+            elif status == "removed":
+                if path.is_file():
+                    path.unlink()
+                if parent.is_dir():
+                    empty = list(os.scandir(parent)) == 0
+                    if empty:
+                        parent.rmdir()   
                 
             print( status, name )
 
