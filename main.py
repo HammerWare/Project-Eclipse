@@ -8,11 +8,6 @@ from tkinter import filedialog
 
 import update
 
-import playsound
-from playsound import playsound
-
-playsound( os.path.join(update.location,"startup.mp3") )
-
 def Play(self):
     update.GitSync()
     started = subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])

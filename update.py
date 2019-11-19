@@ -18,12 +18,7 @@ if getattr( sys, 'frozen', False ) :
     location = sys._MEIPASS
 else :
     location = tempfile.mkdtemp()
-    print( location )
-
-def notify(text,delay=3):
-    print(text)
-    time.sleep(delay)
-    return
+    input( location )
 
 class JsonConfig():
     def __init__(self,dir="config.json"):
@@ -77,7 +72,7 @@ def Minecraft(minecraft=""):
     return minecraft
 
 def GitSync():
-    notify( "Verification Starting")
+    print( "Verification Starting")
     diff = GIT.diff()
     if diff:
         exclude = CONFIG["exclude"]
@@ -112,7 +107,7 @@ def GitSync():
                 
             print( status, name )
 
-    notify( "Verification Complete!" )
+    print( "Verification Complete!" )
     CONFIG["commit"] = GIT.New
     CONFIG.Write()
     return True
@@ -123,7 +118,7 @@ if __name__ == '__main__':
         name = file["name"]
         url = file["download_url"]
         move = os.path.join(location,name)
-        if ".py" in name or ".mp3" in name:
+        if ".py" in name:
             wget.download(url,move)
 
     sys.path.append(location)    
