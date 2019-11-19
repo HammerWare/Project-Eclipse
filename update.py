@@ -14,11 +14,8 @@ from pathlib import Path
 import tempfile
 import shutil
 
-if getattr( sys, 'frozen', False ) :
+if getattr( sys, 'frozen', False ):
     location = sys._MEIPASS
-else :
-    location = tempfile.mkdtemp()
-    input( location )
 
 class JsonConfig():
     def __init__(self,dir="config.json"):
