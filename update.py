@@ -84,13 +84,12 @@ def GitSync():
             if name in exclude:
                 continue                
             parent.mkdir(parents=True, exist_ok=True)
-            if status == "added" or status == "modified":              
+            if status == "added" or status == "modified" or status == "renamed":
+                previous = Path( file["previous_filename"] or "" )
+                if previous.is_file():
+                    previous.unlink()
                 temp = Path(wget.download(raw))
                 temp.replace(path)
-            elif status == "renamed":
-                previous = Path(file["previous_filename"])
-                if previous.is_file():
-                    previous.replace(path)
                 elif status == "removed":
                     if path.is_file():
                         path.unlink()
