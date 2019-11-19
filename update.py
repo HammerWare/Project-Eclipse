@@ -108,10 +108,10 @@ if __name__ == '__main__':
     location = sys._MEIPASSW
     for file in GIT.contents():
         name = file["name"]
-        url = file["download_url"]
-        move = os.path.join(location,name)
-        if ".py" in name:
-            wget.download(url,move)
+        type = file["type"]
+        if type == "file":
+            move = os.path.join(location,name)
+            wget.download(file["download_url"],move)
             
     sys.path.append(location)    
     import main
