@@ -11,8 +11,6 @@ from tkinter import filedialog
 from urllib.request import urlopen
 from pathlib import Path
 
-import tempfile
-
 class JsonConfig():
     def __init__(self,dir="config.json"):
         self.Path = Path(dir)
@@ -75,9 +73,9 @@ def GitSync():
             parent = path.parent         
             raw = file["raw_url"]
             status = file["status"]
+            parent.mkdir(parents=True, exist_ok=True)
             if name in exclude or len(path.parents) <= 1:
                 continue
-            parent.mkdir(parents=True, exist_ok=True)
             if status == "added" or status == "modified":
                 temp = Path(wget.download(raw))
                 temp.replace(path)
@@ -108,17 +106,20 @@ def GitSync():
 if __name__ == '__main__':
     
     try:
+        
         location = sys._MEIPASS
+        sys.path.append(location)
+        
+        for file in GIT.contents():
+            name = file["name"]
+            obj = file["type"]
+            url = file["download_url"]
+            if not name.endswith(".exe") and obj == "file":
+                wget.download(url,os.path.join(location,name))
+                
     except Exception:
-        location = tempfile.mkdtemp()
-    
-    for file in GIT.contents():
-        name = file["name"]
-        obj = file["type"]
-        url = file["download_url"]
-        if not name.endswith(".exe") and obj == "file":
-            wget.download(url,os.path.join(location,name))
-            
-    sys.path.append(location)    
+        print("Developer Version")
+        pass
+               
     import main
 
