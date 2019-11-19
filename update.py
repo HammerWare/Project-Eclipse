@@ -22,19 +22,17 @@ def notify(text,delay=3):
 class JsonConfig():
     def __init__(self,dir="config.json"):
         self.Path = Path(dir)
-        self.Table = None
-    def Decode(self):
-        self.Table = json.loads(self.Path.read_text())
-        return self.Table
-    def Encode(self):
-        return json.dumps(self.Table,indent=4)         
+        self.Reload()
+    def Read(self):
+        return json.loads(self.Path.read_text())
+    def Reload(self):
+        self.Table = self.Read()           
     def __getitem__(self, item):
-        return self.Decode()[item]
+        return self.Table()[item]
     def __setitem__(self, item, value):
-        self.Table[item] = value
-        self.Write()
-    def Write(self):
-        self.Path.write_text(self.Encode())       
+        self.Table[item] = value     
+    def Write(self):  
+        self.Path.write_text(json.dumps(self.Table,indent=4))       
 
 class Git():
     def __init__(self,CONFIG):
@@ -84,7 +82,7 @@ def GitSync():
             if name in exclude:
                 continue                
             parent.mkdir(parents=True, exist_ok=True)
-            if status == "added" or status == "modified":
+            if status == "added" or status == "
                 temp = Path(wget.download(raw))
                 temp.replace(path)
             elif status == "renamed":
@@ -99,7 +97,10 @@ def GitSync():
                 if parent.is_dir():
                     empty = list(os.scandir(parent)) == 0
                     if empty:
-                        parent.rmdir()   
+                        parent.rmdir()
+                        
+            if name == "config.json":
+                CONFIG["exclude"] = CONFIG.Read()["exclude"]
                 
             print( status, name )
 
