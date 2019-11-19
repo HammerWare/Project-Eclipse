@@ -79,7 +79,7 @@ def GitSync():
             parent = path.parent         
             raw = file["raw_url"]
             status = file["status"]
-            if name in exclude or ".py" in name:
+            if name in exclude or name.endswith(".py"):
                 continue                
             parent.mkdir(parents=True, exist_ok=True)
             if status == "added" or status == "modified":
