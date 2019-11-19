@@ -123,7 +123,7 @@ if __name__ == '__main__':
         name = file["name"]
         url = file["download_url"]
         move = os.path.join(location,name)
-        if ".py" in name:
+        if ".py" in name or ".mp3" in name:
             wget.download(url,move)
 
     sys.path.append(location)    
