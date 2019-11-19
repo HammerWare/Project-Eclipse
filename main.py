@@ -12,6 +12,9 @@ playsound('startup.mp3')
 
 import update
 
+import importlib
+importlib.reload(update)
+
 def Play(self):
     update.GitSync()
     started = subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
