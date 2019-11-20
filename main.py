@@ -7,13 +7,11 @@ from tkinter import *
 from tkinter import filedialog
 
 import update
-update.GitSync()
+if update.GetBundle():
+    update.GitSync()
 
 def Play(self):
-    started = subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
-    if started:
-        self.config(state='disabled')
-    return started
+    subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
 
 window = Tk()
 window.title('Dawn')

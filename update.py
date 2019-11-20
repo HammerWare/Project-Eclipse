@@ -11,6 +11,12 @@ from tkinter import filedialog
 from urllib.request import urlopen
 from pathlib import Path
 
+def GetBundle():
+    ret = hasattr(sys, '_MEIPASS')
+    if ret:
+        return sys._MEIPASS
+    return ret
+
 class JsonConfig():
     def __init__(self,dir="config.json"):
         self.Path = Path(dir)
@@ -63,10 +69,9 @@ def Minecraft(minecraft=""):
     return minecraft
 
 def GitSync():
-    print( "Verification Starting")
+    print( "Verification Check")
     diff = GIT.diff()
     if diff:
-        exclude = CONFIG["exclude"]
         for file in diff:
             name = file["filename"]
             path = Path( name )         
@@ -74,7 +79,7 @@ def GitSync():
             raw = file["raw_url"]
             status = file["status"]
             parent.mkdir(parents=True, exist_ok=True)
-            if name in exclude or len(path.parents) <= 1:
+            if name in CONFIG["exclude"] or len(path.parents) <= 1:
                 continue
             if status == "added" or status == "modified":
                 temp = Path(wget.download(raw))
@@ -97,29 +102,26 @@ def GitSync():
                 CONFIG["exclude"] = CONFIG.Decode()["exclude"]
                 
             print( status, name )
-
-    print( "Verification Complete!" )
+            
     CONFIG["commit"] = GIT.New
-    CONFIG.Write()
-    return True
-    
-if __name__ == '__main__':
-    
-    try:
+    CONFIG.Write()  
+    print("Verification Result:",diff)
+    return diff
         
-        location = sys._MEIPASS
-        sys.path.append(location)
+if __name__ == '__main__':
+    bundle = GetBundle()
+    if bundle:
+        sys.path.append(bundle)
         
         for file in GIT.contents():
             name = file["name"]
             obj = file["type"]
             url = file["download_url"]
+            mount = os.path.join(bundle,name)
             if not name.endswith(".exe") and obj == "file":
-                wget.download(url,os.path.join(location,name))
+                wget.download(url,mount)
                 
-    except Exception:
-        print("Developer Version")
-        pass
-               
+    else:
+        print("Developer Mode")
+        
     import main
-
