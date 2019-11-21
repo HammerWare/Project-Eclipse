@@ -133,8 +133,6 @@ def main():
             mount = os.path.join(BUNDLE,name)
             if not name.endswith(".exe") and obj == "file":
                 wget.download(url,mount)
-                if name.endswith(".zip"):
-                    sys.path.append(name)
                 
     else:
         print("Developer Mode")

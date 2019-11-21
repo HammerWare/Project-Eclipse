@@ -7,6 +7,7 @@ import time
 from tkinter import *
 from tkinter import filedialog
 
+sys.path.append("pypresence.zip")
 from pypresence import Presence
 RPC = Presence('644400056941936640')
 RPC.Online = False
