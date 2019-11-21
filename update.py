@@ -102,7 +102,8 @@ def GitSync():
                 
             print( status, name )
             
-    CONFIG["commit"] = GIT.New  
+        CONFIG["commit"] = GIT.New
+        
     print( "Verification Complete" )
     return True
 
