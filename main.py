@@ -7,13 +7,12 @@ import time
 from tkinter import *
 from tkinter import filedialog
 
-sys.path.append("pypresence.zip")
-from pypresence import Presence
-RPC = Presence('644400056941936640')
-RPC.Online = False
-
 import update
 update.GitSync()
+
+from discord import Presence
+RPC = Presence('644400056941936640')
+RPC.Online = False
 
 def Play(self):
     subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
