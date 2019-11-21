@@ -15,10 +15,12 @@ from tkinter import messagebox
 from urllib.request import urlopen
 from pathlib import Path
 
-def GetBundle():
-    ret = hasattr(sys, '_MEIPASS')
-    if ret:
-        return sys._MEIPASS
+def GetInfo(dev=False):
+    ret = lambda: None
+    ret.IsBundle = hasattr(sys, '_MEIPASS')
+    ret.Location = os.getcwd()
+    if ret.IsBundle or dev:
+        ret.Location = sys._MEIPASS
     return ret
 
 class Registry():
@@ -55,13 +57,15 @@ class Git():
     def latest(self):
         return self.fetch("branches/master")["commit"]["sha"]
     def diff(self):
-        if self.Old == "0":
+        if not self.Old:
             self.Old = self.New
         if self.Old == self.New:
             return None
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
+    if not SELF.IsBundle:
+        break
     print( "Verification Check")
     diff = GIT.diff()
     if diff:
@@ -98,18 +102,24 @@ def GitSync():
     return True
 
 def Minecraft(minecraft=CONFIG["minecraft"]):
-    if not os.path.isfile(minecraft):
+    file = "MinecraftLauncher.exe"
+    valid = all([ 
+        os.path.isfile(minecraft), 
+        minecraft.endswith(file)
+    ])
+    if not valid:   
         options = {}
         options['initialdir'] = os.environ['ProgramFiles(x86)']
         options['title'] = 'Minecraft Folder'
         options['mustexist'] = True
         dir = (filedialog.askdirectory)(**options)
-        minecraft = (dir + '/MinecraftLauncher.exe')
+        minecraft = os.path.join(minecraft,dir)
         CONFIG["minecraft"] = minecraft  
     return minecraft
 
 ###########GLOBAL#############
 
+SELF = GetInfo():
 CONFIG = Registry("SOFTWARE\Dawn")
 if not CONFIG.Valid:
     CONFIG["minecraft"] = "C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe"
@@ -120,9 +130,8 @@ GIT = Git(CONFIG)
 ###########GLOBAL#############
 
 def start():
-    bundle = GetBundle()
-    if bundle:
-        sys.path.append(bundle)
+    if SELF.IsBundle:
+        sys.path.append(SELF.Location)
         
         for file in GIT.contents():
             name = file["name"]
