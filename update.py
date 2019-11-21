@@ -56,14 +56,15 @@ class Git():
         try:
             return json.load(urlopen(self.Url+api))
         except URLError as e:
-            print('URL ERROR:', e.reason, e.code)
+            print('URL ERROR:',str(e))
             return None
     def latest(self):
         return self.fetch("branches/master")["commit"]["sha"]
     def diff(self):
         if self.Old == "0":
             self.Old = self.New
-        if self.Old == self.New:
+            return None
+        elif self.Old == self.New:
             return None
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
@@ -154,5 +155,4 @@ if __name__ == '__main__':
     try:
         start()
     except Exception as e:
-        input(traceback.format_exc())
-        pass
+        print(traceback.format_exc())
