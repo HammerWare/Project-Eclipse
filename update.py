@@ -120,7 +120,7 @@ def Minecraft(minecraft=""):
 
 ###########GLOBAL#############
 
-BUNDLE = os.getcwd()
+BUNDLE = GetBundle()
 CONFIG = Registry("SOFTWARE\Dawn")
 if not CONFIG.Valid:
     CONFIG["minecraft"] = "C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe"
