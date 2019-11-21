@@ -20,6 +20,7 @@ def GetInfo():
     ret.IsDev = ( "--dev" in sys.argv )
     ret.IsBundle = hasattr(sys, '_MEIPASS')
     ret.Location = os.getcwd()
+    ret.Run = any([ not ret.IsBundle, ret.IsDev ])
     if ret.IsBundle:
         ret.Location = sys._MEIPASS
     return ret
@@ -65,8 +66,8 @@ class Git():
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
-    if any([ not SELF.IsBundle, SELF.IsDev ]):
-        return "Verification Disabled"
+    if not SELF.Run:
+        return None
     
     print( "Verification Started" )
     diff = GIT.diff()
@@ -100,8 +101,8 @@ def GitSync():
             print( status, name )
             
     CONFIG["commit"] = GIT.New  
-    
-    return "Verification Complete"
+    print( "Verification Complete" )
+    return True
 
 def Minecraft(change=False):
     minecraft = CONFIG["minecraft"]
@@ -133,15 +134,14 @@ GIT = Git(CONFIG)
 ###########GLOBAL#############
 
 def start():
-    
-    if SELF.IsBundle:
+    if SELF.Run:
         sys.path.append(SELF.Location)
         
         for file in GIT.contents():
             name = file["name"]
             obj = file["type"]
             url = file["download_url"]
-            mount = os.path.join(bundle,name)
+            mount = os.path.join(SELF.Location,name)
             if name.endswith(".py"):
                 wget.download(url,mount)              
         
