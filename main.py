@@ -7,10 +7,8 @@ import time
 from tkinter import *
 from tkinter import filedialog
 
-import discord
-from discord import Presence
-client_id = '644400056941936640'
-RPC = Presence(client_id)
+from pypresence import Presence
+RPC = Presence('644400056941936640')
 RPC.Online = False
 
 import update
