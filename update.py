@@ -54,7 +54,11 @@ class Git():
     def contents(self,dir=""):
         return self.fetch("contents/" +dir)
     def fetch(self,api):
-        return json.load(urlopen(self.Url+api))
+        try:
+            return json.load(urlopen(self.Url+api))
+        except URLError as e:
+            print('URL ERROR:', e.reason, e.code)
+            return None
     def latest(self):
         return self.fetch("branches/master")["commit"]["sha"]
     def diff(self):
