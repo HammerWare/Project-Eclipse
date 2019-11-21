@@ -13,6 +13,7 @@ if update.GetBundle():
 def Play(self):
     subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
 
+
 window = Tk()
 window.title('Dawn')
 window.geometry('200x75')

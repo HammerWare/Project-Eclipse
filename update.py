@@ -5,34 +5,34 @@ import json
 import wget
 import time
 
+import winreg
+
 from tkinter import *
 from tkinter import filedialog
 
 from urllib.request import urlopen
 from pathlib import Path
 
-def GetBundle():
-    ret = hasattr(sys, '_MEIPASS')
-    if ret:
-        return sys._MEIPASS
-    return ret
-
-class JsonConfig():
-    def __init__(self,dir="config.json"):
-        self.Path = Path(dir)
-        self.Reload()
-    def Reload(self):
-        self.Table = self.Decode()
-    def Decode(self):
-        return json.loads(self.Path.read_text())
-    def Encode(self):
-        return json.dumps(self.Table,indent=4)         
-    def __getitem__(self, item):
-        return self.Decode()[item]
-    def __setitem__(self, item, value):
-        self.Table[item] = value
-    def Write(self):
-        self.Path.write_text(self.Encode())       
+class Registry():
+    def __init__(self,path,user=winreg.HKEY_CURRENT_USER):
+        self.User = user
+        self.Path = path
+        self.Main = self.load()
+    def load(self):
+        try:
+            self.Valid = True
+            return winreg.OpenKey(self.User,self.Path,sam=KEY_ALL_ACCESS)
+        except:
+            self.Valid = False
+            return winreg.CreateKey(self.User,self.Path)
+    def __setitem__(self,item,value):
+        winreg.SetValueEx(self.Main,item,0,winreg.REG_SZ,value)
+    def __getitem__(self,item=''):
+        try:
+            return winreg.QueryValueEx(self.Main,item)[0]
+        except:
+            pass
+        return False
 
 class Git():
     def __init__(self,CONFIG):
@@ -47,28 +47,14 @@ class Git():
         return self.fetch("branches/master")["commit"]["sha"]
     def diff(self):
         self.New = self.latest()
-        if self.Old == "" or self.Old == self.New:
+        if self.Old == "":
+            self.Old = self.New
+        elif self.Old == self.New:
             return None
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
-CONFIG = JsonConfig()
-GIT = Git(CONFIG)
-
-def Minecraft(minecraft=""):
-    if minecraft == "":
-        return CONFIG["minecraft"]
-    elif not os.path.isfile(minecraft):
-        options = {}
-        options['initialdir'] = os.environ['ProgramFiles(x86)']
-        options['title'] = 'Minecraft Folder'
-        options['mustexist'] = True
-        dir = (filedialog.askdirectory)(**options)
-        minecraft = dir + '/MinecraftLauncher.exe'
-
-    CONFIG["minecraft"] = minecraft  
-    return minecraft
-
 def GitSync():
+    exclude = ["launcher_profiles.json"]
     print( "Verification Check")
     diff = GIT.diff()
     if diff:
@@ -79,7 +65,7 @@ def GitSync():
             raw = file["raw_url"]
             status = file["status"]
             parent.mkdir(parents=True, exist_ok=True)
-            if name in CONFIG["exclude"] or len(path.parents) <= 1:
+            if name in exclude or len(path.parents) <= 1:
                 continue
             if status == "added" or status == "modified":
                 temp = Path(wget.download(raw))
@@ -97,18 +83,45 @@ def GitSync():
                     empty = list(os.scandir(parent)) == 0
                     if empty:
                         parent.rmdir()
-                        
-            if name == "config.json":
-                CONFIG["exclude"] = CONFIG.Decode()["exclude"]
                 
             print( status, name )
             
-    CONFIG["commit"] = GIT.New
-    CONFIG.Write()  
+    CONFIG["commit"] = GIT.New  
     print("Verification Result:",diff)
     return diff
-        
-if __name__ == '__main__':
+
+def Minecraft(minecraft=""):
+    if minecraft == "":
+        return CONFIG["minecraft"]
+    elif not os.path.isfile(minecraft):
+        options = {}
+        options['initialdir'] = os.environ['ProgramFiles(x86)']
+        options['title'] = 'Minecraft Folder'
+        options['mustexist'] = True
+        dir = (filedialog.askdirectory)(**options)
+        minecraft = dir + '/MinecraftLauncher.exe'
+
+    CONFIG["minecraft"] = minecraft  
+    return minecraft
+
+###########GLOBAL#############
+
+CONFIG = Registry("SOFTWARE\Dawn")
+if not CONFIG.Valid:
+    CONFIG["minecraft"] = "C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe"
+    CONFIG["repo"] = "/TheMerkyShadow/Project-Dawn/"
+    CONFIG["commit"] = ""
+GIT = Git(CONFIG)
+
+###########GLOBAL#############
+
+def GetBundle():
+    ret = hasattr(sys, '_MEIPASS')
+    if ret:
+        return sys._MEIPASS
+    return ret
+
+def main():
     bundle = GetBundle()
     if bundle:
         sys.path.append(bundle)
@@ -125,3 +138,6 @@ if __name__ == '__main__':
         print("Developer Mode")
         
     import main
+    
+if __name__ == '__main__':
+    main()
