@@ -119,7 +119,7 @@ def Minecraft(change=False):
         options['title'] = 'Minecraft Folder'
         options['mustexist'] = True
         dir = (filedialog.askdirectory)(**options)
-        minecraft = os.path.join(minecraft,dir)
+        minecraft = os.path.join(dir,file)
         CONFIG["minecraft"] = minecraft  
     return minecraft
 
@@ -153,7 +153,5 @@ if __name__ == '__main__':
     try:
         start()
     except Exception as e:
-         pass
-         with open('debug.txt', 'a+') as debug:
-            debug.write(str(e))
-            debug.write(traceback.format_exc())
+        input(traceback.format_exc())
+        pass
