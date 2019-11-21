@@ -14,6 +14,7 @@ def Play(self):
     subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
 
 def Discord():
+    pass
 
 window = Tk()
 window.title('Dawn')
