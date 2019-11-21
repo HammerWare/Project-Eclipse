@@ -120,7 +120,7 @@ def Minecraft(change=False):
         options['title'] = 'Minecraft Folder'
         options['mustexist'] = True
         dir = (filedialog.askdirectory)(**options)
-        minecraft = ( dir +'/' +file )
+        minecraft = os.path.join(dir,file)
         CONFIG["minecraft"] = minecraft  
     return minecraft
 
