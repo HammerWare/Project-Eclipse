@@ -17,7 +17,7 @@ from pathlib import Path
 
 def GetInfo():
     ret = lambda: None
-    ret.Dev = sys.argv.get("--offline",False)
+    ret.IsDev = ( "--dev" in sys.argv )
     ret.IsBundle = hasattr(sys, '_MEIPASS')
     ret.Location = os.getcwd()
     if ret.IsBundle:
@@ -65,7 +65,7 @@ class Git():
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
-    if any( not SELF.IsBundle, SELF.IsDev ):
+    if any([ not SELF.IsBundle, SELF.IsDev ]):
         return "Verification Disabled"
     
     print( "Verification Started" )
@@ -133,6 +133,7 @@ GIT = Git(CONFIG)
 ###########GLOBAL#############
 
 def start():
+    
     if SELF.IsBundle:
         sys.path.append(SELF.Location)
         
