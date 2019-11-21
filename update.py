@@ -4,6 +4,7 @@ import sys
 import json
 import wget
 import time
+import traceback
 
 import winreg
 
@@ -62,6 +63,7 @@ class Git():
 def GitSync():
     print( "Verification Check")
     diff = GIT.diff()
+    print( GIT.Old, GIT.New )    
     if diff:
         for file in diff:
             name = file["filename"]
@@ -115,9 +117,9 @@ EXCLUDE = [
     "dawn.exe",
     "main.py",
     "update.py",
-     "launcher_profiles.json"
+    "launcher_profiles.json"
 ]
-BUNDLE = GetBundle()
+BUNDLE = os.getcwd()
 CONFIG = Registry("SOFTWARE\Dawn")
 if not CONFIG.Valid:
     CONFIG["minecraft"] = "C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe"
@@ -145,4 +147,9 @@ def start():
     import main
     
 if __name__ == '__main__':
-    start()
+    try:
+        start()
+    except Exception:
+        input(traceback.format_exc())
+        pass
+        
