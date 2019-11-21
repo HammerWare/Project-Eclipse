@@ -103,13 +103,14 @@ def GitSync():
     
     return "Verification Complete"
 
-def Minecraft(minecraft=CONFIG["minecraft"]):
+def Minecraft(change=False):
+    minecraft = CONFIG["minecraft"]
     file = "MinecraftLauncher.exe"
     valid = all([ 
         os.path.isfile(minecraft), 
         minecraft.endswith(file)
     ])
-    if not valid:   
+    if not valid or change: 
         options = {}
         options['initialdir'] = os.environ['ProgramFiles(x86)']
         options['title'] = 'Minecraft Folder'
