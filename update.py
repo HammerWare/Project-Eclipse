@@ -28,7 +28,7 @@ class Registry():
     def load(self):
         try:
             self.Valid = True
-            return winreg.OpenKey(self.User,self.Path,sam=KEY_ALL_ACCESS)
+            return winreg.OpenKey(self.User,self.Path,0,winreg.KEY_ALL_ACCESS)
         except:
             self.Valid = False
             return winreg.CreateKey(self.User,self.Path)
@@ -46,6 +46,7 @@ class Git():
         self.Repo = CONFIG["repo"]
         self.Url = ( "https://api.github.com/repos" +self.Repo )
         self.Old = CONFIG["commit"]
+        self.New = self.latest()
     def contents(self,dir=""):
         return self.fetch("contents/" +dir)
     def fetch(self,api):
@@ -53,10 +54,9 @@ class Git():
     def latest(self):
         return self.fetch("branches/master")["commit"]["sha"]
     def diff(self):
-        self.New = self.latest()
-        if self.Old == "":
+        if self.Old == "0":
             self.Old = self.New
-        elif self.Old == self.New:
+        if self.Old == self.New:
             return None
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
@@ -100,8 +100,8 @@ def GitSync():
             print( status, name )
             
     CONFIG["commit"] = GIT.New  
-    print("Verification Result:",diff)
-    return diff
+    print("Verification Complete")
+    return True
 
 def Minecraft(minecraft=""):
     if minecraft == "":
@@ -124,7 +124,7 @@ CONFIG = Registry("SOFTWARE\Dawn")
 if not CONFIG.Valid:
     CONFIG["minecraft"] = "C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe"
     CONFIG["repo"] = "/TheMerkyShadow/Project-Dawn/"
-    CONFIG["commit"] = ""
+    CONFIG["commit"] = "0"
 GIT = Git(CONFIG)
 
 ###########GLOBAL#############
