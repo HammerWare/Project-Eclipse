@@ -10,6 +10,7 @@ import winreg
 
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox 
 
 from urllib.request import urlopen
 from pathlib import Path
@@ -143,6 +144,5 @@ if __name__ == '__main__':
     try:
         start()
     except Exception:
-        input(traceback.format_exc())
-        pass
-        
+         messagebox.showerror(title="Error",message="An error has occurred",detail=traceback.format_exc())
+         pass
