@@ -20,7 +20,6 @@ def GetInfo():
     ret.IsDev = ( "--dev" in sys.argv )
     ret.IsBundle = hasattr(sys, '_MEIPASS')
     ret.Location = os.getcwd()
-    ret.Run = any([ not ret.IsBundle, ret.IsDev ])
     if ret.IsBundle:
         ret.Location = sys._MEIPASS
     return ret
@@ -66,7 +65,7 @@ class Git():
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
-    if not SELF.Run:
+    if not SELF.IsBundle:
         return None
     
     print( "Verification Started" )
@@ -134,7 +133,7 @@ GIT = Git(CONFIG)
 ###########GLOBAL#############
 
 def start():
-    if SELF.Run:
+    if SELF.IsBundle:
         sys.path.append(SELF.Location)
         
         for file in GIT.contents():
