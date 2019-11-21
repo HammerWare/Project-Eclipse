@@ -154,5 +154,5 @@ if __name__ == '__main__':
     try:
         start()
     except Exception:
-         messagebox.showerror(title="Error",message="An error has occurred",detail=traceback.format_exc())
+         print(traceback.format_exc())
          pass
