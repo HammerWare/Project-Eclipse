@@ -15,11 +15,12 @@ from tkinter import messagebox
 from urllib.request import urlopen
 from pathlib import Path
 
-def GetInfo(dev=False):
+def GetInfo():
     ret = lambda: None
+    ret.Dev = sys.argv.get("--offline",False)
     ret.IsBundle = hasattr(sys, '_MEIPASS')
     ret.Location = os.getcwd()
-    if ret.IsBundle or dev:
+    if ret.IsBundle:
         ret.Location = sys._MEIPASS
     return ret
 
@@ -64,9 +65,10 @@ class Git():
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
-    if not SELF.IsBundle:
-        break
-    print( "Verification Check")
+    if any( not SELF.IsBundle, SELF.IsDev ):
+        return "Verification Disabled"
+    
+    print( "Verification Started" )
     diff = GIT.diff()
     if diff:
         for file in diff:
@@ -98,8 +100,8 @@ def GitSync():
             print( status, name )
             
     CONFIG["commit"] = GIT.New  
-    print("Verification Complete")
-    return True
+    
+    return "Verification Complete"
 
 def Minecraft(minecraft=CONFIG["minecraft"]):
     file = "MinecraftLauncher.exe"
@@ -119,7 +121,7 @@ def Minecraft(minecraft=CONFIG["minecraft"]):
 
 ###########GLOBAL#############
 
-SELF = GetInfo():
+SELF = GetInfo()
 CONFIG = Registry("SOFTWARE\Dawn")
 if not CONFIG.Valid:
     CONFIG["minecraft"] = "C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe"
@@ -139,10 +141,7 @@ def start():
             url = file["download_url"]
             mount = os.path.join(bundle,name)
             if name.endswith(".py"):
-                wget.download(url,mount)
-                
-    else:
-        print("Developer Mode")
+                wget.download(url,mount)              
         
     import main
     
