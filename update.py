@@ -122,7 +122,7 @@ GIT = Git(CONFIG)
 
 ###########GLOBAL#############
 
-def run():
+def start():
     if BUNDLE:
         sys.path.append(BUNDLE)
         
@@ -140,4 +140,4 @@ def run():
     import main
     
 if __name__ == '__main__':
-    run()
+    start()
