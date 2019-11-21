@@ -13,6 +13,12 @@ from tkinter import filedialog
 from urllib.request import urlopen
 from pathlib import Path
 
+def GetBundle():
+    ret = hasattr(sys, '_MEIPASS')
+    if ret:
+        return sys._MEIPASS
+    return ret
+
 class Registry():
     def __init__(self,path,user=winreg.HKEY_CURRENT_USER):
         self.User = user
@@ -114,12 +120,6 @@ if not CONFIG.Valid:
 GIT = Git(CONFIG)
 
 ###########GLOBAL#############
-
-def GetBundle():
-    ret = hasattr(sys, '_MEIPASS')
-    if ret:
-        return sys._MEIPASS
-    return ret
 
 def main():
     bundle = GetBundle()
