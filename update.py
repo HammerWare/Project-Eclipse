@@ -60,7 +60,6 @@ class Git():
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
-    exclude = ["launcher_profiles.json"]
     print( "Verification Check")
     diff = GIT.diff()
     if diff:
@@ -71,7 +70,7 @@ def GitSync():
             raw = file["raw_url"]
             status = file["status"]
             parent.mkdir(parents=True, exist_ok=True)
-            if name in exclude or len(path.parents) != 0:
+            if name in EXCLUDE:
                 continue
             if status == "added" or status == "modified":
                 temp = Path(wget.download(raw))
@@ -112,6 +111,12 @@ def Minecraft(minecraft=""):
 
 ###########GLOBAL#############
 
+EXCLUDE = [
+    "dawn.exe",
+    "main.py",
+    "update.py",
+     "launcher_profiles.json"
+]
 BUNDLE = GetBundle()
 CONFIG = Registry("SOFTWARE\Dawn")
 if not CONFIG.Valid:
@@ -131,7 +136,7 @@ def start():
             obj = file["type"]
             url = file["download_url"]
             mount = os.path.join(BUNDLE,name)
-            if not name.endswith(".exe") and obj == "file":
+            if not name in EXCLUDE and obj == "file":
                 wget.download(url,mount)
                 
     else:
