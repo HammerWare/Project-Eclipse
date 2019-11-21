@@ -11,10 +11,10 @@ import update
 update.GitSync()
 
 def Play(self):
-    null = open(os.devnull, 'w')
-    subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'],stdout=null)
+    subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'],stdout=subprocess.DEVNULL)
 
 def Discord():
+    print("discord")
     pass
 
 window = Tk()
