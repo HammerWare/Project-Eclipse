@@ -112,7 +112,6 @@ def Minecraft(minecraft=""):
 
 ###########GLOBAL#############
 
-BUNDLE = GetBundle()
 CONFIG = Registry("SOFTWARE\Dawn")
 if not CONFIG.Valid:
     CONFIG["minecraft"] = "C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe"
@@ -122,22 +121,20 @@ GIT = Git(CONFIG)
 
 ###########GLOBAL#############
 
-def LiveLoad(dir=""):
-    for file in GIT.contents(dir):
-        name = file["name"]
-        obj = file["type"]
-        url = file["download_url"]
-        mount = os.path.join(BUNDLE,name)
-        if not name.endswith(".exe") and obj == "file":
-            wget.download(url,mount)
-            
-    return
-
 def main():
-    if BUNDLE:
-        sys.path.append(BUNDLE)
-        LiveLoad()
-        LiveLoad("discord")
+    bundle = GetBundle()
+    if bundle:
+        sys.path.append(bundle)
+        
+        for file in GIT.contents():
+            name = file["name"]
+            obj = file["type"]
+            url = file["download_url"]
+            mount = os.path.join(bundle,name)
+            if not name.endswith(".exe") and obj == "file":
+                wget.download(url,mount)
+                if name.endswith(".zip"):
+                    sys.path.append(name)
                 
     else:
         print("Developer Mode")
