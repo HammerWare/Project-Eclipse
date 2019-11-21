@@ -128,7 +128,7 @@ def main():
 
         git = ["","discord"]
         for dir in git:
-            if os.path.isdir(dir):
+            if not os.path.isdir(dir):
                 os.mkdir(dir)
             for file in GIT.contents(dir):
                 name = file["name"]
