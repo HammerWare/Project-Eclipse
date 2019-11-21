@@ -11,7 +11,7 @@ import update
 update.GitSync()
 
 def Play(self):
-    subprocess.run([update.Minecraft(), '--workDir', 'dawn'])
+    subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'],stdout=os.devnull,stderr=os.devnull)
 
 def Discord():
     pass
@@ -19,7 +19,6 @@ def Discord():
 window = Tk()
 window.title('Dawn')
 window.geometry('200x75')
-window.geometry('+%d+%d' % window.winfo_pointerxy())
 window.play = Button(window, text='Play', width=15)
 window.play.place(relx=0.5, rely=0.45, anchor=CENTER)
 window.play.config(command=(lambda : Play(window.play)) )
