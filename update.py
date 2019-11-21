@@ -78,7 +78,7 @@ def GitSync():
             raw = file["raw_url"]
             status = file["status"]
             parent.mkdir(parents=True, exist_ok=True)
-            if exclude.__contains__(name) or name.startswith(".git"):
+            if name in ','.join(exclude) or name.startswith(".git"):
                 continue
             if status == "added" or status == "modified":
                 temp = Path(wget.download(raw))
