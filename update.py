@@ -152,6 +152,8 @@ def start():
 if __name__ == '__main__':
     try:
         start()
-    except Exception:
-         print(traceback.format_exc())
+    except Exception as e:
          pass
+         with open('debug.txt', 'a+') as debug:
+            debug.write(str(e))
+            debug.write(traceback.format_exc())
