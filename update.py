@@ -59,7 +59,7 @@ class Git():
     def latest(self):
         return self.fetch("branches/master")["commit"]["sha"]
     def diff(self):
-        if not self.Old:
+        if self.Old == "0":
             self.Old = self.New
         if self.Old == self.New:
             return None
