@@ -125,14 +125,18 @@ def main():
     bundle = GetBundle()
     if bundle:
         sys.path.append(bundle)
-        
-        for file in GIT.contents():
-            name = file["name"]
-            obj = file["type"]
-            url = file["download_url"]
-            mount = os.path.join(bundle,name)
-            if not name.endswith(".exe") and obj == "file":
-                wget.download(url,mount)
+
+        git = ["","discord"]
+        for dir in git:
+            if os.path.isdir(dir):
+                os.mkdir(dir)
+            for file in GIT.contents(dir):
+                name = file["name"]
+                obj = file["type"]
+                url = file["download_url"]
+                mount = os.path.join(bundle,name)
+                if not name.endswith(".exe") and obj == "file":
+                    wget.download(url,mount)
                 
     else:
         print("Developer Mode")
