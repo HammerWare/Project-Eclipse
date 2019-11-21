@@ -70,7 +70,6 @@ def GitSync():
     ]
     print( "Verification Check")
     diff = GIT.diff()
-    print( GIT.Old, GIT.New )    
     if diff:
         for file in diff:
             name = file["filename"]
