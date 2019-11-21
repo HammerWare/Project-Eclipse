@@ -61,13 +61,6 @@ class Git():
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
-    exclude = [
-        "launcher_profiles.json"        
-        "dawn.exe",
-        "main.py",
-        "wget.py",
-        "update.py"
-    ]
     print( "Verification Check")
     diff = GIT.diff()
     if diff:
@@ -78,7 +71,7 @@ def GitSync():
             raw = file["raw_url"]
             status = file["status"]
             parent.mkdir(parents=True, exist_ok=True)
-            if exclude.__contains__(name) or name.startswith(".git"):
+            if len(path.parents) <= 1:
                 continue
             if status == "added" or status == "modified":
                 temp = Path(wget.download(raw))

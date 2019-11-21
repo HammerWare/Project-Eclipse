@@ -10,21 +10,10 @@ from tkinter import filedialog
 import update
 update.GitSync()
 
-from discord import Presence
-RPC = Presence('644400056941936640')
-RPC.Online = False
-
 def Play(self):
     subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
 
 def Discord():
-    if RPC.Online:    
-        RPC.close()
-        RPC.Online = False            
-    else:
-        RPC.connect()
-        RPC.update(state="Current Playing", details="A Minecraft Experience")
-        RPC.Online = True
 
 window = Tk()
 window.title('Dawn')
