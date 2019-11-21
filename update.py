@@ -63,6 +63,7 @@ class Git():
     def diff(self):
         if self.Old == "0":
             self.Old = self.New
+            return None
         elif self.Old == self.New:
             return None
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
