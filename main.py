@@ -11,7 +11,7 @@ import update
 update.GitSync()
 
 def Play(self):
-    subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'],stdout=subprocess.DEVNULL)
+    subprocess.Popen([update.Minecraft(), '--workDir', 'dawn'])
 
 def Discord():
     print("discord")
