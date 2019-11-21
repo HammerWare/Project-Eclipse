@@ -97,18 +97,15 @@ def GitSync():
     print("Verification Complete")
     return True
 
-def Minecraft(minecraft=""):
-    if minecraft == "":
-        return CONFIG["minecraft"]
-    elif not os.path.isfile(minecraft):
+def Minecraft(minecraft=CONFIG["minecraft"]):
+    if not os.path.isfile(minecraft):
         options = {}
         options['initialdir'] = os.environ['ProgramFiles(x86)']
         options['title'] = 'Minecraft Folder'
         options['mustexist'] = True
         dir = (filedialog.askdirectory)(**options)
-        minecraft = dir + '/MinecraftLauncher.exe'
-
-    CONFIG["minecraft"] = minecraft  
+        minecraft = (dir + '/MinecraftLauncher.exe')
+        CONFIG["minecraft"] = minecraft  
     return minecraft
 
 ###########GLOBAL#############
