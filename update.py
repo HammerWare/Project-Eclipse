@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 sys.path.append(os.getcwd())
 
 import shutil
@@ -17,13 +18,14 @@ git = shutil.which("git")
 installed = os.path.isdir(".git")
 
 if git is None:
-    subprocess.check_output("git.exe")
+    os.popen("git.exe")
     sys.exit()
-        
+    
 if not installed:
-    subprocess.check_output("git init && git remote add origin " +repo +" && git fetch && git checkout")
+    os.popen("git init && git remote add origin " +repo )
+    sys.exit()
 
-os.system("git pull")
+os.popen("git pull origin master").read()
 
 import menu
     
