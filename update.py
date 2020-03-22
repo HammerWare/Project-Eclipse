@@ -55,7 +55,9 @@ class GitStatus():
             return None
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
-def GitSync(git=GitStatus(),config=SavedConfig()):
+def GitSync():
+    config = SavedConfig()
+    git = GitStatus()
     print( "Verification Started" )
     diff = git.diff()
     if diff:
