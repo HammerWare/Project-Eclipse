@@ -9,10 +9,14 @@ import traceback
 
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 
 from urllib.request import urlopen
 from pathlib import Path
 
+def Notify(msg):
+    return messagebox.showinfo(title=None,message=msg)
+    
 class SavedConfig():
     def __init__(self,dir="config.json"):
         self.Path = Path(dir)
@@ -58,7 +62,7 @@ class GitStatus():
 def GitSync():
     config = SavedConfig()
     git = GitStatus()
-    print( "Verification Started" )
+    Notify( "Verification Started" )
     diff = git.diff()
     if diff:
         for file in diff:
@@ -89,8 +93,8 @@ def GitSync():
                 
             print( status, name )
             
-    config["commit"] = git.latest
-    print( "Verification Complete" )
+    config["commit"] = git.latest()
+    Notify("Verification Complete")
     return True
 
 def Minecraft(config=SavedConfig(),modify=False):
@@ -114,4 +118,4 @@ if __name__ == '__main__':
     try:
         import menu
     except Exception as e:
-        print(traceback.format_exc())
+        Notify(traceback.format_exc())
