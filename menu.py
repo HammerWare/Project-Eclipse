@@ -9,10 +9,14 @@ import json
 
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 
 from pathlib import Path
 
-import update
+try:
+    import update
+except:
+    import __main__ as update
     
 def Play(self):
     subprocess.Popen( [ update.Minecraft(), '--workDir', 'dawn' ], close_fds=True, shell=True )
