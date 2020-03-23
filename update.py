@@ -17,6 +17,7 @@ from pathlib import Path
 log = open("log", "w+" )
 
 def Notify(msg):
+    print( msg )
     return messagebox.showinfo(title=None,message=msg)
     
 class SavedConfig():
