@@ -14,10 +14,8 @@ from tkinter import messagebox
 from urllib.request import urlopen
 from pathlib import Path
 
-def Notify(msg,log=False):
-    if log:
-        print( msg, file=log )
-    messagebox.showinfo(title=None,message=msg)
+def Notify(msg):
+    return messagebox.showinfo(title=None,message=msg)
     
 class SavedConfig():
     def __init__(self,dir="config.json"):
@@ -62,44 +60,46 @@ class GitStatus():
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
-    with open("log", "w+" ) as log:
-        exclude = [ "dawn.exe" ]
-        config = SavedConfig()
-        git = GitStatus()
-        Notify( "Verification Started", log )
-        diff = git.diff()
-        if diff:
-            for file in diff:
-                name = file["filename"]
-                path = Path( name )         
-                parent = path.parent         
-                raw = file["raw_url"]
-                status = file["status"]
-                parent.mkdir(parents=True, exist_ok=True)
-            
-                if name in exclude:
-                    continue
-                elif status == "added" or status == "modified":
-                    temp = Path(wget.download(raw))
-                    temp.replace(path)
-                elif status == "renamed":
-                    previous = Path(file["previous_filename"])   
-                    if previous.is_file():
-                        previous.unlink()
-                    temp = Path(wget.download(raw))
-                    temp.replace(path)                    
-                elif status == "removed":
-                    if path.is_file():
-                        path.unlink()
-                    if parent.is_dir():
-                        empty = list(os.scandir(parent)) == 0
-                        if empty:
-                            parent.rmdir()
+    Notify( "Verification Started" )    
+    config = SavedConfig()
+    git = GitStatus()
+    diff = git.diff()
+    if diff:
+        log = open("log", "w+" )
+        for file in diff:
+            name = file["filename"]
+            path = Path( name )         
+            parent = path.parent         
+            raw = file["raw_url"]
+            status = file["status"]
+            parent.mkdir(parents=True, exist_ok=True)
+
+            exclude = [ "dawn.exe" ]
+            if name in exclude:
+                continue
+            elif status == "added" or status == "modified":
+                temp = Path(wget.download(raw))
+                temp.replace(path)
+            elif status == "renamed":
+                previous = Path(file["previous_filename"])   
+                if previous.is_file():
+                    previous.unlink()
+                temp = Path(wget.download(raw))
+                temp.replace(path)                    
+            elif status == "removed":
+                if path.is_file():
+                    path.unlink()
+                if parent.is_dir():
+                    empty = list(os.scandir(parent)) == 0
+                    if empty:
+                        parent.rmdir()
                 
-                print( status, name, file = log )
+            print( status, name, file = log )
+
+        log.close()
             
-        config["commit"] = git.latest()
-        Notify("Verification Complete", log )
+    config["commit"] = git.latest()
+    Notify("Verification Complete" )
     sys.exit()
 
 def Minecraft(config=SavedConfig(),modify=False):
