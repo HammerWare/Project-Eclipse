@@ -13,10 +13,7 @@ from tkinter import messagebox
 
 from pathlib import Path
 
-try:
-    import update
-except:
-    import __main__ as update
+import update
     
 def Play(self):
     subprocess.Popen( [ update.Minecraft(), '--workDir', 'dawn' ], close_fds=True, shell=True )
