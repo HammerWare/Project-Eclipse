@@ -14,12 +14,12 @@ from tkinter import messagebox
 from pathlib import Path
 
 try:
-    import update
+    import init
 except:
-    import __main__ as update
+    import __main__ as init
     
 def Play(self):
-    subprocess.Popen( [ update.Minecraft(), '--workDir', 'dawn' ], close_fds=True, shell=True )
+    subprocess.Popen( [ init.Minecraft(), '--workDir', 'dawn' ], close_fds=True, shell=True )
 
 window = Tk()
 window.title('Dawn')
@@ -30,8 +30,8 @@ window.play.config(command=(lambda : Play(window.play)) )
 window.navbar = Menu(window)
 
 window.options = Menu((window.navbar), tearoff=0)
-window.update = window.options.add_command(label='Check For Updates', command=( lambda : update.GitSync() ))
-window.select = window.options.add_command(label='Edit Minecraft Location', command=( lambda : update.Minecraft(modify=True) ))
+window.update = window.options.add_command(label='Check For Updates', command=( lambda : init.GitSync() ))
+window.select = window.options.add_command(label='Edit Minecraft Location', command=( lambda : init.Minecraft(modify=True) ))
 
 window.navbar.add_cascade(label='Options', menu=(window.options))
 
