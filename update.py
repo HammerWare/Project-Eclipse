@@ -114,7 +114,6 @@ def Minecraft(config=SavedConfig(),modify=False):
     return minecraft
 
 if __name__ == '__main__':
-    print("test")
     try:
         import menu
     except Exception as e:
