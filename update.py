@@ -72,8 +72,7 @@ def GitSync():
             raw = file["raw_url"]
             status = file["status"]
             parent.mkdir(parents=True, exist_ok=True)
-            if len(path.parents) <= 1:
-                continue
+            
             if status == "added" or status == "modified":
                 temp = Path(wget.download(raw))
                 temp.replace(path)
