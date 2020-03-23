@@ -94,7 +94,7 @@ def GitSync():
             
     config["commit"] = git.latest()
     Notify("Verification Complete")
-    return True
+    sys.exit()
 
 def Minecraft(config=SavedConfig(),modify=False):
     minecraft = config["minecraft"]
