@@ -62,6 +62,7 @@ class GitStatus():
         return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
 
 def GitSync():
+    exclude = [ "dawn.exe" ]
     config = SavedConfig()
     git = GitStatus()
     Notify( "Verification Started" )
@@ -75,7 +76,9 @@ def GitSync():
             status = file["status"]
             parent.mkdir(parents=True, exist_ok=True)
             
-            if status == "added" or status == "modified":
+            if name in exclude:
+                continue
+            elif status == "added" or status == "modified":
                 temp = Path(wget.download(raw))
                 temp.replace(path)
             elif status == "renamed":
