@@ -14,9 +14,9 @@ from tkinter import messagebox
 from pathlib import Path
 
 import update
-    
+
 def Play(self):
-    subprocess.Popen( [ update.Minecraft(), '--workDir', 'dawn' ], close_fds=True, shell=True )
+    subprocess.Popen([ update.Minecraft(), '--workDir', 'dawn' ],creationflags=0x00000010)
 
 window = Tk()
 window.title('Dawn')
