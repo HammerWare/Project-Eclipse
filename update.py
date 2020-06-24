@@ -47,20 +47,21 @@ class GitManager():
         self.New = self.latest()
         self.Diff = self.diff()
     def fetch(self,api):
+        print(self.Url+api)
         try:
             return json.load(urlopen(self.Url+api))
         except urllib.error.URLError as e:
             Notify( "\n" +str(e) )   
             sys.exit()
     def latest(self):
-        return self.fetch("/branches/"+self.Branch)["commit"]["sha"]
+        return self.fetch("branches/"+self.Branch)["commit"]["sha"]
     def diff(self):
         if self.Old == "0":
             self.Old = self.New
             return None
         elif self.Old == self.New:
             return None
-        return self.fetch( "/compare/" +self.Old +"..." +self.New )["files"]
+        return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
     def sync(self):
         Notify( "Verification Started" )    
         if self.Diff:
@@ -92,9 +93,7 @@ class GitManager():
                         if empty:
                             parent.rmdir()
                 
-                print( "\n", status, name, file = sys.stderr )
-
-            Notify( sys.stderr )
+                print( status, name )
             
         Notify("Verification Complete" )     
         self.Config["commit"] = self.latest()
