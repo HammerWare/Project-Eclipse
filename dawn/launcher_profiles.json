@@ -6,21 +6,21 @@
     "profilesFormat" : 2
   },
   "profiles" : {
-    "04413fbc45148c03bda997fac2513a95" : {
-      "created" : "1970-01-02T00:00:00.000Z",
-      "icon" : "Grass",
-      "lastUsed" : "1970-01-02T00:00:00.000Z",
-      "lastVersionId" : "latest-release",
-      "name" : "",
-      "type" : "latest-release"
-    },
-    "ea0be2100ef9d46c041db4be9af23426" : {
+    "3fc5ba962055f04b474588b42844ee44" : {
       "created" : "1970-01-01T00:00:00.000Z",
       "icon" : "Crafting_Table",
       "lastUsed" : "1970-01-01T00:00:00.000Z",
       "lastVersionId" : "latest-snapshot",
       "name" : "",
       "type" : "latest-snapshot"
+    },
+    "a8cac3ea59e9e3486b6977d8c4142a25" : {
+      "created" : "1970-01-02T00:00:00.000Z",
+      "icon" : "Grass",
+      "lastUsed" : "1970-01-02T00:00:00.000Z",
+      "lastVersionId" : "latest-release",
+      "name" : "",
+      "type" : "latest-release"
     },
     "forge" : {
       "icon" : "Furnace_On",
@@ -32,7 +32,6 @@
     }
   },
   "settings" : {
-    "channel" : "release",
     "crashAssistance" : true,
     "enableAdvanced" : false,
     "enableAnalytics" : false,
@@ -40,7 +39,6 @@
     "enableReleases" : false,
     "enableSnapshots" : false,
     "keepLauncherOpen" : false,
-    "locale" : "en-US",
     "profileSorting" : "ByLastPlayed",
     "showGameLog" : false,
     "showMenu" : false,

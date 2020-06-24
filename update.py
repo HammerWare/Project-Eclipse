@@ -11,7 +11,9 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 
+import urllib
 from urllib.request import urlopen
+
 from pathlib import Path
 
 def Notify(msg):
@@ -35,74 +37,71 @@ class SavedConfig():
     def Write(self):
         self.Path.write_text(self.Encode())       
 
-class GitStatus():
-    def __init__(self,config=SavedConfig()):
-        self.Repo = config["repo"]
+class GitManager():
+    def __init__(self,branch="master"):
+        self.Config = SavedConfig()
+        self.Repo = self.Config["repo"]
         self.Url = ( "https://api.github.com/repos" +self.Repo )
-        self.Old = config["commit"]
+        self.Branch = branch       
+        self.Old = self.Config["commit"]        
         self.New = self.latest()
-    def contents(self,dir=""):
-        return self.fetch("contents/" +dir)
+        self.Diff = self.diff()
     def fetch(self,api):
         try:
             return json.load(urlopen(self.Url+api))
-        except URLError as e:
-            print('URL ERROR:',str(e))
-            return None
+        except urllib.error.URLError as e:
+            Notify( "\n" +str(e) )   
+            sys.exit()
     def latest(self):
-        return self.fetch("branches/master")["commit"]["sha"]
+        return self.fetch("/branches/"+self.Branch)["commit"]["sha"]
     def diff(self):
         if self.Old == "0":
             self.Old = self.New
             return None
         elif self.Old == self.New:
             return None
-        return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
+        return self.fetch( "/compare/" +self.Old +"..." +self.New )["files"]
+    def sync(self):
+        Notify( "Verification Started" )    
+        if self.Diff:
+            for file in self.Diff:
+                name = file["filename"]
+                path = Path( name )         
+                parent = path.parent         
+                raw = file["raw_url"]
+                status = file["status"]
+                parent.mkdir(parents=True, exist_ok=True)
 
-def GitSync():
-    Notify( "Verification Started" )    
-    config = SavedConfig()
-    git = GitStatus()
-    diff = git.diff()
-    if diff:
-        log = open("log", "w+" )
-        for file in diff:
-            name = file["filename"]
-            path = Path( name )         
-            parent = path.parent         
-            raw = file["raw_url"]
-            status = file["status"]
-            parent.mkdir(parents=True, exist_ok=True)
-
-            exclude = [ "dawn.exe" ]
-            if name in exclude:
-                continue
-            elif status == "added" or status == "modified":
-                temp = Path(wget.download(raw))
-                temp.replace(path)
-            elif status == "renamed":
-                previous = Path(file["previous_filename"])   
-                if previous.is_file():
-                    previous.unlink()
-                temp = Path(wget.download(raw))
-                temp.replace(path)                    
-            elif status == "removed":
-                if path.is_file():
-                    path.unlink()
-                if parent.is_dir():
-                    empty = list(os.scandir(parent)) == 0
-                    if empty:
-                        parent.rmdir()
+                exclude = [ "dawn.exe" ]
+                if name in exclude:
+                    continue
+                elif status == "added" or status == "modified":
+                    temp = Path(wget.download(raw))
+                    temp.replace(path)
+                elif status == "renamed":
+                    previous = Path(file["previous_filename"])   
+                    if previous.is_file():
+                        previous.unlink()
+                    temp = Path(wget.download(raw))
+                    temp.replace(path)                    
+                elif status == "removed":
+                    if path.is_file():
+                        path.unlink()
+                    if parent.is_dir():
+                        empty = list(os.scandir(parent)) == 0
+                        if empty:
+                            parent.rmdir()
                 
-            print( status, name, file = log )
+                print( "\n", status, name, file = sys.stderr )
 
-        log.close()
+            Notify( sys.stderr )
             
-    config["commit"] = git.latest()
-    Notify("Verification Complete" )
-    sys.exit()
-
-def Minecraft(config=SavedConfig(),modify=False):
+        Notify("Verification Complete" )     
+        self.Config["commit"] = self.latest()
+        sys.exit()
+        
+def Minecraft(modify=False):
+    config = SavedConfig()
     minecraft = config["minecraft"]
     file = "MinecraftLauncher.exe"
     valid = all([ 
@@ -116,7 +115,7 @@ def Minecraft(config=SavedConfig(),modify=False):
         options['mustexist'] = True
         dir = (filedialog.askdirectory)(**options)
         minecraft = os.path.join(dir,file)
-        config["minecraft"] = minecraft  
+        config["minecraft"] = minecraft
     return minecraft
 
 if __name__ == '__main__':
@@ -124,3 +123,6 @@ if __name__ == '__main__':
         import menu
     except Exception as e:
         Notify(traceback.format_exc())
+
+
+    

@@ -1,22 +1,15 @@
 import os
 import sys
-import time
-import traceback
 
 import subprocess
 
-import json
-
 from tkinter import *
-from tkinter import filedialog
-from tkinter import messagebox
-
-from pathlib import Path
 
 import update
 
 def Play(self):
-    subprocess.Popen([ update.Minecraft(), '--workDir', 'dawn' ],creationflags=0x00000010)
+    print( os.path.join(os.getcwd(),'dawn') )
+    subprocess.Popen([ update.Minecraft(), '--workDir', os.path.join(os.getcwd(),'dawn') ],creationflags=0x00000010)
 
 window = Tk()
 window.title('Dawn')
@@ -27,7 +20,7 @@ window.play.config(command=(lambda : Play(window.play)) )
 window.navbar = Menu(window)
 
 window.options = Menu((window.navbar), tearoff=0)
-window.update = window.options.add_command(label='Check For Updates', command=( lambda : update.GitSync() ))
+window.update = window.options.add_command(label='Check For Updates', command=( lambda : update.GitManager().sync() ))
 window.select = window.options.add_command(label='Edit Minecraft Location', command=( lambda : update.Minecraft(modify=True) ))
 
 window.navbar.add_cascade(label='Options', menu=(window.options))
