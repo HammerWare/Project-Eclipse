@@ -17,10 +17,10 @@ from urllib.request import urlopen
 from pathlib import Path
 
 def Notify(msg):
-    return messagebox.showinfo(title=None,message=msg)
-    
-class SavedConfig():
-    def __init__(self,dir="config.json"):
+    return messagebox.showinfo(title=None, message=msg)
+
+class SavedConfig:
+    def __init__(self, dir='config.json'):
         self.Path = Path(dir)
         self.Reload()
     def Reload(self):
@@ -28,40 +28,47 @@ class SavedConfig():
     def Decode(self):
         return json.loads(self.Path.read_text())
     def Encode(self):
-        return json.dumps(self.Table,indent=4)         
+        return json.dumps((self.Table), indent=4)
     def __getitem__(self, item):
         return self.Decode()[item]
     def __setitem__(self, item, value):
         self.Table[item] = value
         self.Write()
     def Write(self):
-        self.Path.write_text(self.Encode())       
+        self.Path.write_text(self.Encode())
 
-class GitManager():
-    def __init__(self,branch="master"):
+class GitManager:
+    def __init__(self, branch='master'):
         self.Config = SavedConfig()
-        self.Repo = self.Config["repo"]
-        self.Url = ( "https://api.github.com/repos" +self.Repo )
-        self.Branch = branch       
-        self.Old = self.Config["commit"]        
+        self.Repo = self.Config['repo']
+        self.Url = 'https://api.github.com/repos' + self.Repo
+        self.Branch = branch
+        self.Old = self.Config['commit']
         self.New = self.latest()
         self.Diff = self.diff()
-    def fetch(self,api):
-        print(self.Url+api)
+    def fetch(self, api, exact=False):
         try:
-            return json.load(urlopen(self.Url+api))
+            if exact:
+                return urlopen(api).read().decode('utf-8')
+            return json.load(urlopen(self.Url + api))
         except urllib.error.URLError as e:
-            Notify( "\n" +str(e) )   
+            Notify('\n' + str(e))
             sys.exit()
+    def download(self, path):
+        url = 'https://raw.githubusercontent.com'
+        url += self.Repo + self.Branch + '/' + path
+        temp = Path(wget.download(url))
+        temp.replace(path)
+        return temp
     def latest(self):
-        return self.fetch("branches/"+self.Branch)["commit"]["sha"]
+        return self.fetch('branches/' + self.Branch)['commit']['sha']
     def diff(self):
-        if self.Old == "0":
+        if self.Old == '0':
             self.Old = self.New
-            return None
-        elif self.Old == self.New:
-            return None
-        return self.fetch( "compare/" +self.Old +"..." +self.New )["files"]
+            return
+        if self.Old == self.New:
+            return
+        return self.fetch('compare/' + self.Old + '...' + self.New)['files']
     def sync(self):
         Notify( "Verification Started" )    
         if self.Diff:
@@ -122,6 +129,6 @@ if __name__ == '__main__':
         import menu
     except Exception as e:
         Notify(traceback.format_exc())
-
-
-    
+        git = GitManager()
+        git.download('update.py')
+        git.download('menu.py')

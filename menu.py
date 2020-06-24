@@ -8,7 +8,6 @@ from tkinter import *
 import update
 
 def Play(self):
-    print( os.path.join(os.getcwd(),'dawn') )
     subprocess.Popen([ update.Minecraft(), '--workDir', os.path.join(os.getcwd(),'dawn') ],creationflags=0x00000010)
 
 window = Tk()
