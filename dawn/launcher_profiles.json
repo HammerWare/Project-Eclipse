@@ -1,16 +1,4 @@
 {
-  "authenticationDatabase" : {
-    "b48f73378c7f20053f33776449a92fbd" : {
-      "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiNDhmNzMzNzhjN2YyMDA1M2YzMzc3NjQ0OWE5MmZiZCIsInlnZ3QiOiIzYjAxMDYzODg5ZDc0MWNiODRlMWQ3N2JiNjVjYzQ2OSIsInNwciI6ImNjMjBlNGFhMTQ4MjRlYjdhYTNjZGFmNTk1OGY0ZGM5IiwiaXNzIjoiWWdnZHJhc2lsLUF1dGgiLCJleHAiOjE1OTMxNDA1MDIsImlhdCI6MTU5Mjk2NzcwMn0.XChTXTSRNupGdOexSGTlpV2lm_hiygNhJfKTcSW3C8g",
-      "profiles" : {
-        "cc20e4aa14824eb7aa3cdaf5958f4dc9" : {
-          "displayName" : "TheMerkyShadow"
-        }
-      },
-      "properties" : [],
-      "username" : "williamh1103@aol.com"
-    }
-  },
   "clientToken" : "bc39b4f556ed4006afce4c951ad7dc27",
   "launcherVersion" : {
     "format" : 21,
