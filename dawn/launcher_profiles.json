@@ -1,10 +1,27 @@
 {
-  "clientToken" : "",
+  "authenticationDatabase" : {
+    "b48f73378c7f20053f33776449a92fbd" : {
+      "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiNDhmNzMzNzhjN2YyMDA1M2YzMzc3NjQ0OWE5MmZiZCIsInlnZ3QiOiIzZTVlNGYxZjlhOTQ0MTAwOWM0Y2E5NzE1ODFjMjE4MSIsInNwciI6ImNjMjBlNGFhMTQ4MjRlYjdhYTNjZGFmNTk1OGY0ZGM5IiwiaXNzIjoiWWdnZHJhc2lsLUF1dGgiLCJleHAiOjE1OTMyODY5NDEsImlhdCI6MTU5MzExNDE0MX0.fe4HKRFM7BjBV06Cabkcl25iyye7UbwMGge8fSYngWE",
+      "profiles" : {
+        "cc20e4aa14824eb7aa3cdaf5958f4dc9" : {
+          "displayName" : "TheMerkyShadow"
+        }
+      },
+      "properties" : [],
+      "username" : "williamh1103@aol.com"
+    }
+  },
+  "clientToken" : "5309255738c74d9f96901aec309538fc",
+  "launcherVersion" : {
+    "format" : 21,
+    "name" : "Dawn",
+    "profilesFormat" : 2
+  },
   "profiles" : {
     "1.12.2-forge" : {
       "icon" : "Furnace_On",
       "javaArgs" : "-Xmx6G",
-      "lastUsed" : "2020-06-25T16:57:41.327Z",
+      "lastUsed" : "2020-06-25T19:44:50.820Z",
       "lastVersionId" : "1.12.2-forge",
       "name" : "Dawn",
       "type" : "Custom"
@@ -26,6 +43,10 @@
       "type" : "latest-release"
     }
   },
+  "selectedUser" : {
+    "account" : "b48f73378c7f20053f33776449a92fbd",
+    "profile" : "cc20e4aa14824eb7aa3cdaf5958f4dc9"
+  },
   "settings" : {
     "crashAssistance" : true,
     "enableAdvanced" : true,
@@ -38,10 +59,5 @@
     "showGameLog" : false,
     "showMenu" : false,
     "soundOn" : false
-  },
-  "launcherVersion" : {
-    "format" : 21,
-    "name" : "Dawn",
-    "profilesFormat" : 2
   }
 }
