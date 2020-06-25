@@ -26,10 +26,6 @@
       "type" : "latest-release"
     }
   },
-  "selectedUser" : {
-    "account" : "b48f73378c7f20053f33776449a92fbd",
-    "profile" : "cc20e4aa14824eb7aa3cdaf5958f4dc9"
-  },
   "settings" : {
     "crashAssistance" : true,
     "enableAdvanced" : true,
