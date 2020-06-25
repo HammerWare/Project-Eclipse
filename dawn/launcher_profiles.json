@@ -1,11 +1,14 @@
 {
   "clientToken" : "",
-  "launcherVersion" : {
-    "format" : 21,
-    "name" : "",
-    "profilesFormat" : 2
-  },
   "profiles" : {
+    "1.12.2-forge" : {
+      "icon" : "Furnace_On",
+      "javaArgs" : "-Xmx6G",
+      "lastUsed" : "2020-06-25T16:57:41.327Z",
+      "lastVersionId" : "1.12.2-forge",
+      "name" : "Dawn",
+      "type" : "Custom"
+    },
     "69fd72de4b4fcab6f1124301390ca4a6" : {
       "created" : "1970-01-01T00:00:00.000Z",
       "icon" : "Crafting_Table",
@@ -17,31 +20,32 @@
     "fd1dc39711cd8a5a2d0a2049469702f2" : {
       "created" : "1970-01-02T00:00:00.000Z",
       "icon" : "Grass",
-      "lastUsed" : "1970-01-02T00:00:00.000Z",
+      "lastUsed" : "1970-01-01T00:00:00.000Z",
       "lastVersionId" : "latest-release",
       "name" : "",
       "type" : "latest-release"
-    },
-    "forge" : {
-      "icon" : "Furnace_On",
-      "javaArgs" : "-Xmx6G",
-      "lastUsed" : "2020-06-24T03:01:45.410Z",
-      "lastVersionId" : "1.12.2-forge1.12.2-14.23.5.2847",
-      "name" : "Dawn",
-      "type" : "Custom"
     }
+  },
+  "selectedUser" : {
+    "account" : "b48f73378c7f20053f33776449a92fbd",
+    "profile" : "cc20e4aa14824eb7aa3cdaf5958f4dc9"
   },
   "settings" : {
     "crashAssistance" : true,
-    "enableAdvanced" : false,
+    "enableAdvanced" : true,
     "enableAnalytics" : false,
     "enableHistorical" : false,
-    "enableReleases" : false,
+    "enableReleases" : true,
     "enableSnapshots" : false,
     "keepLauncherOpen" : false,
     "profileSorting" : "ByLastPlayed",
     "showGameLog" : false,
     "showMenu" : false,
     "soundOn" : false
+  },
+  "launcherVersion" : {
+    "format" : 21,
+    "name" : "Dawn",
+    "profilesFormat" : 2
   }
 }
