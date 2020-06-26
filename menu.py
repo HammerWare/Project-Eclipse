@@ -20,7 +20,6 @@ window.navbar = Menu(window)
 
 window.options = Menu((window.navbar), tearoff=0)
 window.update = window.options.add_command(label='Check For Updates', command=( lambda : update.GitManager().sync() ))
-window.select = window.options.add_command(label='Edit Minecraft Location', command=( lambda : update.Minecraft(modify=True) ))
 
 window.navbar.add_cascade(label='Options', menu=(window.options))
 

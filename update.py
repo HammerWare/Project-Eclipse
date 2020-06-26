@@ -16,11 +16,13 @@ from urllib.request import urlopen
 
 from pathlib import Path
 
+import winreg
+
 def Notify(msg):
     return messagebox.showinfo(title=None, message=msg)
 
-class SavedConfig:
-    def __init__(self, dir='config.json'):
+class JsonConfig:
+    def __init__(self, dir='manifest.json'):
         self.Path = Path(dir)
         self.Reload()
     def Reload(self):
@@ -38,97 +40,107 @@ class SavedConfig:
         self.Path.write_text(self.Encode())
 
 class GitManager:
-    def __init__(self, branch='master'):
-        self.Config = SavedConfig()
-        self.Repo = self.Config['repo']
-        self.Url = 'https://api.github.com/repos' + self.Repo
-        self.Branch = branch
-        self.Old = self.Config['commit']
-        self.New = self.latest()
-        self.Diff = self.diff()
-    def fetch(self, api, exact=False):
-        try:
-            if exact:
-                return urlopen(api).read().decode('utf-8')
-            return json.load(urlopen(self.Url + api))
+    def __init__(self, repo='TheMerkyShadow/Project-Dawn'):
+        self.Repo = repo
+        self.Config = JsonConfig()        
+    def APIGateway(self, api):
+        url = ( 'https://api.github.com/repos/' )
+        url += ( self.Repo +api )
+        try:              
+            return json.load(urlopen(url))
         except urllib.error.URLError as e:
             Notify('\n' + str(e))
-            sys.exit()
-    def download(self, path):
-        url = 'https://raw.githubusercontent.com'
-        url += self.Repo + self.Branch + '/' + path
-        temp = Path(wget.download(url))
-        temp.replace(path)
-        return temp
-    def latest(self):
-        return self.fetch('branches/' + self.Branch)['commit']['sha']
-    def diff(self):
-        if self.Old == '0':
+    def GitDownload(self, path, branch="/master/", output=True):
+        url = ( 'https://raw.githubusercontent.com/' )
+        url += ( self.Repo +branch +path )
+        if output:
+            temp = Path(wget.download(url))
+            temp.replace(path)
+            return temp
+        else:
+            return urlopen(url).read().decode('utf-8')
+    def Latest(self):
+        return self.APIGateway('/branches/master')['commit']['sha']
+    def Diff(self):
+        self.Old = self.Config['commit']        
+        self.New = self.Latest()
+        if not self.Old.isdigit():
             self.Old = self.New
-            return
+            return None
         if self.Old == self.New:
-            return
-        return self.fetch('compare/' + self.Old + '...' + self.New)['files']
-    def sync(self):
-        Notify( "Verification Started" )    
-        if self.Diff:
-            for file in self.Diff:
-                name = file["filename"]
-                path = Path( name )         
-                parent = path.parent         
-                raw = file["raw_url"]
-                status = file["status"]
-                parent.mkdir(parents=True, exist_ok=True)
+            return None
+        return self.APIGateway('/compare/' + self.Old + '...' + self.New)['files']
+    def HandleFile(self,path,status,url=None):
+        exclude = [ "dawn.exe" ]
+        if path.name in exclude:
+            return 
+        parent = path.parent
+        parent.mkdir(parents=True, exist_ok=True)
+        if status == "add" or status == "modify" or status == "rename":
+            temp = Path(wget.download(url))
+            temp.replace(path)
+        elif status == "remove":
+            if path.is_file():
+                path.unlink()
+            if parent.is_dir():
+                empty = list(os.scandir(parent)) == 0
+                if empty:
+                    parent.rmdir()
 
-                exclude = [ "dawn.exe" ]
-                if name in exclude:
-                    continue
-                elif status == "added" or status == "modified":
-                    temp = Path(wget.download(raw))
-                    temp.replace(path)
-                elif status == "renamed":
-                    previous = Path(file["previous_filename"])   
-                    if previous.is_file():
-                        previous.unlink()
-                    temp = Path(wget.download(raw))
-                    temp.replace(path)                    
-                elif status == "removed":
-                    if path.is_file():
-                        path.unlink()
-                    if parent.is_dir():
-                        empty = list(os.scandir(parent)) == 0
-                        if empty:
-                            parent.rmdir()
+        print( path, status )
+        return
+    def Sync(self):
+        Notify( "Verification Started" )
+        diff = self.Diff()
+        if diff:
+            for info in diff:
+                path = Path( info["filename"] )                 
+                url = info["raw_url"]
+                status = info["status"]
                 
-                print( status, name )
-            
-        Notify("Verification Complete" )     
-        self.Config["commit"] = self.latest()
-        sys.exit()
-        
-def Minecraft(modify=False):
-    config = SavedConfig()
-    minecraft = config["minecraft"]
-    file = "MinecraftLauncher.exe"
-    valid = all([ 
-        os.path.isfile(minecraft), 
-        minecraft.endswith(file)
-    ])
-    if not valid or modify: 
-        options = {}
-        options['initialdir'] = os.environ['ProgramFiles(x86)']
-        options['title'] = 'Minecraft Folder'
-        options['mustexist'] = True
-        dir = (filedialog.askdirectory)(**options)
-        minecraft = os.path.join(dir,file)
-        config["minecraft"] = minecraft
-    return minecraft
+                if path.suffix == ".download":
+                    url = path.read_text()
+
+                if status == "rename":
+                    path.with_name(info["previous_filename"])
+                    
+                self.HandleFile(info,path,status,url)
+                
+        self.Config["commit"] = self.New
+        Notify("Verification Complete" ) 
+        return
+    
+class Registry():
+    def __init__(self,path,user=winreg.HKEY_CURRENT_USER):
+        self.User = user
+        self.Path = path
+        self.Main = self.load()
+    def load(self):
+        try:
+            self.Valid = True
+            return winreg.OpenKey(self.User,self.Path,sam=KEY_ALL_ACCESS)
+        except:
+            self.Valid = False
+            return winreg.CreateKey(self.User,self.Path)
+    def __setitem__(self,item,value):
+        winreg.SetValueEx(self.Main,item,0,winreg.REG_SZ,value)
+    def __getitem__(self,item=''):
+        try:
+            return winreg.QueryValueEx(self.Main,item)[0]
+        except:
+            pass
+        return False           
+
+def Minecraft():
+    ret = Registry("Software\Mojang\InstalledProducts\Minecraft Launcher")
+    ret = ( ret["InstallLocation"] +ret["InstallExe"] )
+    return ret
 
 if __name__ == '__main__':
-    try:
+   try:
         import menu
     except Exception as e:
         Notify(traceback.format_exc())
         git = GitManager()
-        git.download('update.py')
-        git.download('menu.py')
+        git.GitDownload('update.py')
+        git.GitDownload('menu.py')
