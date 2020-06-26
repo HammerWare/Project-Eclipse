@@ -64,48 +64,43 @@ class GitManager:
     def Diff(self):
         self.Old = self.Config['commit']        
         self.New = self.Latest()
-        if not self.Old.isdigit():
-            self.Old = self.New
-            return None
         if self.Old == self.New:
             return None
         return self.APIGateway('/compare/' + self.Old + '...' + self.New)['files']
-    def HandleFile(self,path,status,url=None):
-        exclude = [ "dawn.exe" ]
-        if path.name in exclude:
-            return 
-        parent = path.parent
-        parent.mkdir(parents=True, exist_ok=True)
-        if status == "add" or status == "modify" or status == "rename":
-            temp = Path(wget.download(url))
-            temp.replace(path)
-        elif status == "remove":
-            if path.is_file():
-                path.unlink()
-            if parent.is_dir():
-                empty = list(os.scandir(parent)) == 0
-                if empty:
-                    parent.rmdir()
-
-        print( path, status )
-        return
     def Sync(self):
         Notify( "Verification Started" )
         diff = self.Diff()
         if diff:
             for info in diff:
-                path = Path( info["filename"] )                 
-                url = info["raw_url"]
-                status = info["status"]
+                path = Path( info["filename"] )
+                url = info["raw_url"]  
+                if path.name == "dawn.exe":
+                    continue
                 
-                if path.suffix == ".download":
-                    url = path.read_text()
+                parent = path.parent
+                parent.mkdir(parents=True, exist_ok=True)
 
-                if status == "rename":
+                status = info["status"]
+                if status == "renamed":
                     path.with_name(info["previous_filename"])
-                    
-                self.HandleFile(info,path,status,url)
-                
+                if status == "added" or status == "modified" or status == "renamed":
+                    temp = Path(wget.download(url))
+                    with open(temp) as file:
+                        content = file.readline()
+                        remote = content.startswith("http")
+                        if remote:
+                            temp = Path(wget.download(content))
+                    temp.replace(path)
+                elif status == "remove":
+                    if path.is_file():
+                        path.unlink()
+                    if parent.is_dir():
+                        empty = list(os.scandir(parent)) == 0
+                        if empty:
+                            parent.rmdir()
+
+                print( path, status )
+
         self.Config["commit"] = self.New
         Notify("Verification Complete" ) 
         return
