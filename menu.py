@@ -19,7 +19,7 @@ window.play.config(command=(lambda : Play(window.play)) )
 window.navbar = Menu(window)
 
 window.options = Menu((window.navbar), tearoff=0)
-window.update = window.options.add_command(label='Check For Updates', command=( lambda : update.GitManager().sync() ))
+window.update = window.options.add_command(label='Check For Updates', command=( lambda : update.GitManager().Sync() ))
 
 window.navbar.add_cascade(label='Options', menu=(window.options))
 
