@@ -137,7 +137,7 @@ def Minecraft():
     return ret
 
 if __name__ == '__main__':
-   try:
+    try:
         import menu
     except Exception as e:
         Notify(traceback.format_exc())
