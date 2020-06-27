@@ -16,6 +16,7 @@ from urllib.request import urlopen
 
 from pathlib import Path
 
+import shutil
 import winreg
 
 def Notify(msg):
@@ -50,20 +51,19 @@ class GitManager:
             return json.load(urlopen(url))
         except urllib.error.URLError as e:
             Notify('\n' + str(e))
-    def GitDownload(self, path, branch="/master/", output=True):
+    def Download(self, path, branch="/master/"):
         url = ( 'https://raw.githubusercontent.com/' )
         url += ( self.Repo +branch +path )
-        if output:
-            temp = Path(wget.download(url))
-            temp.replace(path)
-            return temp
-        else:
-            return urlopen(url).read().decode('utf-8')
+        temp = Path(wget.download(url))
+        temp.replace(path)
+        return temp
     def Latest(self):
         return self.APIGateway('/branches/master')['commit']['sha']
     def Diff(self):
         self.Old = self.Config['commit']        
         self.New = self.Latest()
+        if not self.Old.isalnum():
+            self.Old = self.New
         if self.Old == self.New:
             return None
         return self.APIGateway('/compare/' + self.Old + '...' + self.New)['files']
@@ -81,17 +81,10 @@ class GitManager:
                 parent.mkdir(parents=True, exist_ok=True)
 
                 status = info["status"]
-                if status == "renamed":
-                    path.with_name(info["previous_filename"])
                 if status == "added" or status == "modified" or status == "renamed":
                     temp = Path(wget.download(url))
-                    with open(temp) as file:
-                        content = file.readline()
-                        remote = content.startswith("http")
-                        if remote:
-                            temp = Path(wget.download(content))
-                    temp.replace(path)
-                elif status == "remove":
+                    temp.replace(path)   
+                elif status == "removed":
                     if path.is_file():
                         path.unlink()
                     if parent.is_dir():
@@ -109,33 +102,35 @@ class Registry():
     def __init__(self,path,user=winreg.HKEY_CURRENT_USER):
         self.User = user
         self.Path = path
-        self.Main = self.load()
-    def load(self):
+        self.Valid = self.Load()
+    def Load(self):
         try:
-            self.Valid = True
-            return winreg.OpenKey(self.User,self.Path,sam=KEY_ALL_ACCESS)
-        except:
-            self.Valid = False
-            return winreg.CreateKey(self.User,self.Path)
+            return winreg.OpenKey(self.User,self.Path,access=winreg.KEY_ALL_ACCESS)
+        except FileNotFoundError as e:
+            return None
+    def Create(self):
+        winreg.CreateKey(self.User,self.Path)        
     def __setitem__(self,item,value):
-        winreg.SetValueEx(self.Main,item,0,winreg.REG_SZ,value)
+        winreg.SetValueEx(self.Valid,item,0,winreg.REG_SZ,value)
     def __getitem__(self,item=''):
         try:
-            return winreg.QueryValueEx(self.Main,item)[0]
-        except:
-            pass
-        return False           
-
+            return winreg.QueryValueEx(self.Valid,item)[0]
+        except FileNotFoundError as e:
+            return None
+        
 def Minecraft():
-    ret = Registry("Software\Mojang\InstalledProducts\Minecraft Launcher")
-    ret = ( ret["InstallLocation"] +ret["InstallExe"] )
-    return ret
-
+    reg = Registry("Software\Mojang\InstalledProducts\Minecraft Launcher")
+    if reg.Valid:
+        return ( reg["InstallLocation"] +reg["InstallExe"] )
+    return reg.Valid
+        
 if __name__ == '__main__':
     try:
         import menu
     except Exception as e:
         Notify(traceback.format_exc())
+    finally:
         git = GitManager()
-        git.GitDownload('update.py')
-        git.GitDownload('menu.py')
+        git.Download( "update.py")
+        git.Download( "menu.py")
+    
