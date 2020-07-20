@@ -1,5 +1,10 @@
 {
-	"id": "1.12.2-forge",
+    "_comment_": [
+        "Please do not automate the download and installation of Forge.",
+        "Our efforts are supported by ads from the download page.",
+        "If you MUST automate this, please consider supporting the project through https://www.patreon.com/LexManos/"
+    ],
+    "id": "1.12.2-forge",
     "time": "2020-04-12T17:57:42+00:00",
     "releaseTime": "2020-04-12T17:57:42+00:00",
     "type": "release",

@@ -81,7 +81,12 @@ class GitManager:
                 parent.mkdir(parents=True, exist_ok=True)
 
                 status = info["status"]
-                if status == "added" or status == "modified" or status == "renamed":
+                if status == "renamed":
+                    previous = Path( info["previous_filename"] )
+                    if previous.is_file():
+                        previous.unlink()
+                    status = "added"
+                if status == "added" or status == "modified":
                     temp = Path(wget.download(url))
                     temp.replace(path)   
                 elif status == "removed":
@@ -129,7 +134,6 @@ if __name__ == '__main__':
         import menu
     except Exception as e:
         Notify(traceback.format_exc())
-    finally:
         git = GitManager()
         git.Download( "update.py")
         git.Download( "menu.py")
