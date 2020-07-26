@@ -1,1 +1,3 @@
-{ "commit": "$Format: %H$" }
+{
+    "commit": "$Format:%H$"
+}
