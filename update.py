@@ -97,8 +97,7 @@ class GitManager:
                     sys.exit()
                     
                 print( status, path )
-
-        self.Config.Reload()        
+     
         self.Config["commit"] = self.New
         Notify("Verification Complete" ) 
         return
