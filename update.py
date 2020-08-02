@@ -39,7 +39,7 @@ class JsonConfig:
         self.Path.write_text(self.Encode())
 
 class GitManager:
-    def __init__(self, repo='TheMerkyShadow/Project-Dawn'):
+    def __init__(self, repo='HammerWare/Project-Eclipse'):
         self.Repo = repo
         self.Config = JsonConfig()        
     def APIGateway(self, api):
