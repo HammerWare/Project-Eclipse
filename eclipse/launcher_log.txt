@@ -1,0 +1,103 @@
+[Info: 2020-08-02 18:36:38.0507786: NetQueue.cpp(232)] NetQueue: Setting up.
+[Info: 2020-08-02 18:36:38.0508636: mainWindows.cpp(81)] Running launcher bootstrap (version 771)
+[Info: 2020-08-02 18:36:38.0812739: NetQueue.cpp(232)] NetQueue: Setting up.
+[Info: 2020-08-02 18:36:38.1075720: Common.cpp(32)] Native Launcher Version: 771
+[Info: 2020-08-02 18:36:38.1076401: Common.cpp(33)] Operating System: Windows 10 Home
+[Info: 2020-08-02 18:36:38.1083679: Common.cpp(34)] Application Data directory: C/.../.minecraft
+[Info: 2020-08-02 18:36:38.1084011: Common.cpp(35)] Executable Path: /.../MinecraftLauncher.exe
+[Info: 2020-08-02 18:36:38.1084254: Common.cpp(36)] App Directory dir: ...\Minecraft
+[Info: 2020-08-02 18:36:38.1084496: Common.cpp(37)] Game data directory: ...\eclipse
+[Info: 2020-08-02 18:36:38.1084708: Common.cpp(38)] Launcher dir: ...\Minecraft\game
+[Info: 2020-08-02 18:36:38.1084916: Common.cpp(39)] Java dir: ...\Minecraft\runtime\jre-x64
+[Info: 2020-08-02 18:36:38.1085128: Common.cpp(40)] TmpDir dir: ...\MinecraftLauncher
+[Info: 2020-08-02 18:36:38.1085348: Common.cpp(41)] x64: true
+[Info: 2020-08-02 18:36:38.1085530: LauncherConfiguration.cpp(291)] Using update preferences at path: ...\eclipse\launcher_profiles.json
+[Warning: 2020-08-02 18:36:38.1087521: LauncherConfiguration.cpp(113)] Failed to get clientToken from configuration, launcher updater will fall back to using stable versions instead of controlled experiment versions.
+[Info: 2020-08-02 18:36:38.1087834: LauncherConfiguration.cpp(294)] Failed to read update preferences from ...\eclipse\launcher_profiles.json
+[Info: 2020-08-02 18:36:38.1088184: LauncherConfiguration.cpp(305)] Using update preferences at path: ...\eclipse\launcher_settings.json
+[Info: 2020-08-02 18:36:38.1091905: NetQueue.cpp(588)] NetQueue: worker thread started.
+[Info: 2020-08-02 18:36:38.1128266: NetQueue.cpp(603)] NetQueue: Starting net action https://launchermeta.mojang.com/v1/products/launcher/d03cf0cf95cce259fa9ea3ab54b65bd28bb0ae82/windows-x86.json
+[Info: 2020-08-02 18:36:38.2399990: NetQueue.cpp(474)] NetQueue: Primary ip: 13.33.46.21, Host: launchermeta.mojang.com
+[Info: 2020-08-02 18:36:38.2400336: NetQueue.cpp(541)] NetQueue: Action finished: https://launchermeta.mojang.com/v1/products/launcher/d03cf0cf95cce259fa9ea3ab54b65bd28bb0ae82/windows-x86.json
+[Info: 2020-08-02 18:36:38.2400452: NetQueue.cpp(562)] NetQueue: Action finalized: https://launchermeta.mojang.com/v1/products/launcher/d03cf0cf95cce259fa9ea3ab54b65bd28bb0ae82/windows-x86.json
+[Info: 2020-08-02 18:36:38.2402953: LauncherConfiguration.cpp(198)] Deciding on update with strategy 2 and clientID 3417431725
+[Info: 2020-08-02 18:36:38.2403254: LauncherConfiguration.cpp(214)] Version of launcher-bootstrap is current, no action is necessary.
+[Info: 2020-08-02 18:36:38.2403447: LauncherConfiguration.cpp(247)] Bootstrap is current
+[Info: 2020-08-02 18:36:38.2405042: LauncherConfiguration.cpp(198)] Deciding on update with strategy 2 and clientID 3417431725
+[Info: 2020-08-02 18:36:38.2405276: LauncherConfiguration.cpp(214)] Version of launcher-core is current, no action is necessary.
+[Info: 2020-08-02 18:36:38.2405446: LauncherConfiguration.cpp(247)] Bootstrap is current
+[Info: 2020-08-02 18:36:38.2406397: LauncherConfiguration.cpp(198)] Deciding on update with strategy 2 and clientID 3417431725
+[Info: 2020-08-02 18:36:38.2406641: LauncherConfiguration.cpp(214)] Version of jre-x64 is current, no action is necessary.
+[Info: 2020-08-02 18:36:38.2406858: LauncherConfiguration.cpp(247)] Bootstrap is current
+[Info: 2020-08-02 18:36:38.2407203: StartLibrary.cpp(70)] Starting ...\Minecraft\game\launcher.dll with ...\Minecraft\runtime\jre-x64\bin\javaw.exe
+[Info: 2020-08-02 18:36:38.2469672: StartLibrary.cpp(86)] Running launcher!
+[Info: 2020-08-02 18:36:38.2474520: LauncherMain.cpp(84)] Initiated models
+[Info: 2020-08-02 18:36:38.2485553: NetQueue.cpp(232)] NetQueue: Setting up.
+[Info: 2020-08-02 18:36:38.2485900: LauncherMain.cpp(217)] Running launcher core (version 2.1.16101)
+[Info: 2020-08-02 18:36:38.2487773: LauncherMain.cpp(230)] Initialization completed
+[Info: 2020-08-02 18:36:38.2491327: LauncherMain.cpp(253)] Main process: true
+[Info: 2020-08-02 18:36:38.2491734: LauncherMain.cpp(300)] workDir: ...\eclipse
+[Info: 2020-08-02 18:36:38.2491977: LauncherMain.cpp(308)] appDir: ...\Minecraft
+[Info: 2020-08-02 18:36:38.2493905: LauncherMain.cpp(346)] Launcher core version: 2.1.16101 (c9c4c2882e7e1879f037a08fef6d35003fabeb84)
+[Info: 2020-08-02 18:36:38.2494525: NetQueue.cpp(232)] NetQueue: Setting up.
+[Info: 2020-08-02 18:36:38.2494745: LauncherController.cpp(390)] Constructing launcher controller with workDir: ...\eclipse, isActive: 1
+[Info: 2020-08-02 18:36:38.2502156: ProfilesFileData.cpp(159)] Reading preferences on path: C:\Users\kgham\Documents\GitHub\Project-Eclipse\eclipse\launcher_profiles.json
+[Info: 2020-08-02 18:36:38.2503712: GameVersionManager.cpp(77)] Looking for installed versions in ...\eclipse\versions
+[Info: 2020-08-02 18:36:38.2505738: GameVersionManager.cpp(119)] Parsing version 1.12.2
+[Info: 2020-08-02 18:36:38.2513817: GameVersionManager.cpp(119)] Parsing version 1.12.2-forge
+[Warning: 2020-08-02 18:36:38.2515856: GameVersionManager.cpp(137)] C:\Users\kgham\Documents\GitHub\Project-Eclipse\eclipse\versions\1.12.2-forge\1.12.2-forge.json._comment_: Unknown key
+[Info: 2020-08-02 18:36:38.2518588: GameVersionManager.cpp(119)] Parsing version 1.16.1
+[Info: 2020-08-02 18:36:38.2533418: GameVersionManager.cpp(119)] Parsing version 1.16.2-pre1
+[Info: 2020-08-02 18:36:38.2547295: NetQueue.cpp(588)] NetQueue: worker thread started.
+[Info: 2020-08-02 18:36:38.2548377: SkinManager.cpp(233)] Failed to read skins file: ...\eclipse\launcher_skins.json
+[Error: 2020-08-02 18:36:38.2548783: MojangAccounts.cpp(181)] Error: NO_USER_SELECTED
+[Info: 2020-08-02 18:36:38.2582790: NetQueue.cpp(603)] NetQueue: Starting net action https://launchermeta.mojang.com/mc/game/version_manifest.json?_t=2020-08-02T18:36:38Z
+[Info: 2020-08-02 18:36:38.2830806: LauncherAppBrowser.cpp(57)] Work dir is ...\eclipse
+[Info: 2020-08-02 18:36:38.2957643: root_window_manager.cpp(83)] Main window has been opened: 03197348
+[Info: 2020-08-02 18:36:38.3958849: NetQueue.cpp(474)] NetQueue: Primary ip: 13.33.46.21, Host: launchermeta.mojang.com
+[Info: 2020-08-02 18:36:38.3959235: NetQueue.cpp(541)] NetQueue: Action finished: https://launchermeta.mojang.com/mc/game/version_manifest.json?_t=2020-08-02T18:36:38Z
+[Info: 2020-08-02 18:36:38.3959362: GameVersionManager.cpp(184)] Got available versions manifest from https://launchermeta.mojang.com/mc/game/version_manifest.json?_t=2020-08-02T18:36:38Z
+[Info: 2020-08-02 18:36:38.3998392: NetQueue.cpp(562)] NetQueue: Action finalized: https://launchermeta.mojang.com/mc/game/version_manifest.json?_t=2020-08-02T18:36:38Z
+[Info: 2020-08-02 18:36:38.3999311: NetQueue.cpp(603)] NetQueue: Starting net action https://launchermeta.mojang.com/v1/packages/0c127f291db55d4a09830a3891c5447e63714d92/1.16.1.json
+[Info: 2020-08-02 18:36:38.4353151: NetQueue.cpp(474)] NetQueue: Primary ip: 13.33.46.21, Host: launchermeta.mojang.com
+[Info: 2020-08-02 18:36:38.4353505: NetQueue.cpp(541)] NetQueue: Action finished: https://launchermeta.mojang.com/v1/packages/0c127f291db55d4a09830a3891c5447e63714d92/1.16.1.json
+[Info: 2020-08-02 18:36:38.4353626: GameVersionManager.cpp(298)] Got game version 1.16.1 manifest from https://launchermeta.mojang.com/v1/packages/0c127f291db55d4a09830a3891c5447e63714d92/1.16.1.json
+[Info: 2020-08-02 18:36:38.4416494: NetQueue.cpp(562)] NetQueue: Action finalized: https://launchermeta.mojang.com/v1/packages/0c127f291db55d4a09830a3891c5447e63714d92/1.16.1.json
+[Info: 2020-08-02 18:36:38.4544489: LauncherMain.cpp(84)] Initiated models
+[Info: 2020-08-02 18:36:38.4545337: NetQueue.cpp(232)] NetQueue: Setting up.
+[Info: 2020-08-02 18:36:38.4545660: LauncherMain.cpp(217)] Running launcher core (version 2.1.16101)
+[Info: 2020-08-02 18:36:38.4552036: LauncherMain.cpp(230)] Initialization completed
+[Info: 2020-08-02 18:36:38.4555813: LauncherMain.cpp(253)] Main process: false
+[Info: 2020-08-02 18:36:38.4556161: LauncherMain.cpp(300)] workDir: ...\.minecraft
+[Info: 2020-08-02 18:36:38.4556342: LauncherMain.cpp(308)] appDir: ...
+[Info: 2020-08-02 18:36:38.4556885: NetQueue.cpp(232)] NetQueue: Setting up.
+[Info: 2020-08-02 18:36:38.4557056: LauncherController.cpp(390)] Constructing launcher controller with workDir: ...\.minecraft, isActive: 0
+[Info: 2020-08-02 18:36:38.4653160: LauncherAppRenderer.cpp(103)] Javascript bridge extended.
+[Info: 2020-08-02 18:36:38.6425997: LauncherAppRenderer.cpp(240)] Creating renderer context
+[Info: 2020-08-02 18:36:38.7922947: ControllerInterface.cpp(105)] Running method getStore
+[Info: 2020-08-02 18:36:38.8338373: ControllerInterface.cpp(133)] Running async method checkForUpdates
+[Info: 2020-08-02 18:36:38.8339809: NetQueue.cpp(603)] NetQueue: Starting net action https://launchermeta.mojang.com/v1/products/launcher/d03cf0cf95cce259fa9ea3ab54b65bd28bb0ae82/windows-x86.json
+[Info: 2020-08-02 18:36:38.8542014: NetQueue.cpp(474)] NetQueue: Primary ip: 13.33.46.21, Host: launchermeta.mojang.com
+[Info: 2020-08-02 18:36:38.8542435: NetQueue.cpp(541)] NetQueue: Action finished: https://launchermeta.mojang.com/v1/products/launcher/d03cf0cf95cce259fa9ea3ab54b65bd28bb0ae82/windows-x86.json
+[Info: 2020-08-02 18:36:38.8544340: NetQueue.cpp(562)] NetQueue: Action finalized: https://launchermeta.mojang.com/v1/products/launcher/d03cf0cf95cce259fa9ea3ab54b65bd28bb0ae82/windows-x86.json
+[Info: 2020-08-02 18:36:48.8860595: ControllerInterface.cpp(133)] Running async method login
+[Info: 2020-08-02 18:36:48.8862906: NetQueue.cpp(603)] NetQueue: Starting net action https://authserver.mojang.com/authenticate
+[Info: 2020-08-02 18:36:49.1219938: NetQueue.cpp(474)] NetQueue: Primary ip: 99.84.115.68, Host: authserver.mojang.com
+[Info: 2020-08-02 18:36:49.1220346: NetQueue.cpp(541)] NetQueue: Action finished: https://authserver.mojang.com/authenticate
+[Info: 2020-08-02 18:36:49.1220460: NetQueue.cpp(562)] NetQueue: Action finalized: https://authserver.mojang.com/authenticate
+[Info: 2020-08-02 18:36:56.8035838: client_handler.cpp(625)] ClientHandler::NotifyBrowserClosing
+[Info: 2020-08-02 18:36:56.8039393: browser_window.cpp(56)] BrowserWindow::OnBrowserClosing
+[Info: 2020-08-02 18:36:56.8130266: browser_window.cpp(72)] BrowserWindow::OnBrowserClosed
+[Info: 2020-08-02 18:36:56.8135493: root_window_manager.cpp(306)] Main window has been closed: 03197348
+[Info: 2020-08-02 18:36:56.8135902: root_window_manager.cpp(315)] All windows are gone.
+[Info: 2020-08-02 18:36:56.8136117: root_window_manager.cpp(317)] Checking if we can close the application...
+[Info: 2020-08-02 18:36:56.8136428: main_context.cpp(205)] Shutting down!
+[Info: 2020-08-02 18:36:56.8154664: NetQueue.cpp(239)] NetQueue: Initiating shutdown.
+[Info: 2020-08-02 18:36:56.8154989: NetQueue.cpp(245)] NetQueue: Waiting for worker thread to finish...
+[Info: 2020-08-02 18:36:56.8159966: NetQueue.cpp(658)] NetQueue: Worker thread shutting down.
+[Info: 2020-08-02 18:36:56.8162570: NetQueue.cpp(248)] NetQueue: Done.
+[Info: 2020-08-02 18:36:56.8245509: StartLibrary.cpp(99)] Launcher ended with 0
+[Info: 2020-08-02 18:36:57.8323857: NetQueue.cpp(239)] NetQueue: Initiating shutdown.
+[Info: 2020-08-02 18:36:57.8324249: NetQueue.cpp(245)] NetQueue: Waiting for worker thread to finish...
+[Info: 2020-08-02 18:36:57.8326881: NetQueue.cpp(658)] NetQueue: Worker thread shutting down.
+[Info: 2020-08-02 18:36:57.8328105: NetQueue.cpp(248)] NetQueue: Done.

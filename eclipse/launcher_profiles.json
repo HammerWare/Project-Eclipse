@@ -1,0 +1,63 @@
+{
+  "authenticationDatabase" : {
+    "cf5ffed35f424e49b54fd7afd33b8276" : {
+      "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZjVmZmVkMzVmNDI0ZTQ5YjU0ZmQ3YWZkMzNiODI3NiIsInlnZ3QiOiIyODFlNDliODViNDA0NTUzODQzMWIzYzc0OGQyNWFiNCIsInNwciI6IjhjODNjNTBkYmNmYTRmZjJiNmY2NGMzMDZhZDExNDQwIiwiaXNzIjoiWWdnZHJhc2lsLUF1dGgiLCJleHAiOjE1OTY1NjYyMzIsImlhdCI6MTU5NjM5MzQzMn0.lktPxUXb8vEkWlYIjbcIowGwsUPfeIqTG8P_CoTdbNM",
+      "profiles" : {
+        "8c83c50dbcfa4ff2b6f64c306ad11440" : {
+          "displayName" : "Hammer1055"
+        }
+      },
+      "properties" : [],
+      "username" : "hamersma1@aol.com"
+    }
+  },
+  "clientToken" : "74a0167aa09142dd9c2e3d707213f6b0",
+  "launcherVersion" : {
+    "format" : 21,
+    "name" : "Dawn",
+    "profilesFormat" : 2
+  },
+  "profiles" : {
+    "1.12.2-forge" : {
+      "icon" : "Furnace_On",
+      "javaArgs" : "-Xmx6G",
+      "lastUsed" : "2020-06-25T19:44:50.820Z",
+      "lastVersionId" : "1.12.2-forge",
+      "name" : "Dawn",
+      "type" : "Custom"
+    },
+    "69fd72de4b4fcab6f1124301390ca4a6" : {
+      "created" : "1970-01-01T00:00:00.000Z",
+      "icon" : "Crafting_Table",
+      "lastUsed" : "1970-01-01T00:00:00.000Z",
+      "lastVersionId" : "latest-snapshot",
+      "name" : "",
+      "type" : "latest-snapshot"
+    },
+    "fd1dc39711cd8a5a2d0a2049469702f2" : {
+      "created" : "1970-01-02T00:00:00.000Z",
+      "icon" : "Grass",
+      "lastUsed" : "1970-01-01T00:00:00.000Z",
+      "lastVersionId" : "latest-release",
+      "name" : "",
+      "type" : "latest-release"
+    }
+  },
+  "selectedUser" : {
+    "account" : "cf5ffed35f424e49b54fd7afd33b8276",
+    "profile" : "8c83c50dbcfa4ff2b6f64c306ad11440"
+  },
+  "settings" : {
+    "crashAssistance" : true,
+    "enableAdvanced" : true,
+    "enableAnalytics" : false,
+    "enableHistorical" : false,
+    "enableReleases" : true,
+    "enableSnapshots" : false,
+    "keepLauncherOpen" : false,
+    "profileSorting" : "ByLastPlayed",
+    "showGameLog" : false,
+    "showMenu" : false,
+    "soundOn" : false
+  }
+}

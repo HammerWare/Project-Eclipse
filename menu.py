@@ -8,10 +8,10 @@ from tkinter import *
 import update
 
 def Play(self):
-    subprocess.Popen([ update.Minecraft(), '--workDir', os.path.join(os.getcwd(),'dawn') ],creationflags=0x00000010)
+    subprocess.Popen([ update.Minecraft(), '--workDir', os.path.join(os.getcwd(),'eclipse') ],creationflags=0x00000010)
 
 window = Tk()
-window.title('Dawn')
+window.title('Eclipse')
 window.geometry('200x75')
 window.play = Button(window, text='Play', width=15)
 window.play.place(relx=0.5, rely=0.45, anchor=CENTER)
