@@ -67,7 +67,7 @@ class GitManager:
                 path = Path( info["filename"] )
                 url = info["raw_url"]
                 url = url.replace("%20", " ") #weird git space bug in url
-                if path.name == "dawn.exe":
+                if path.name == "eclipse.exe":
                     continue
                 
                 parent = path.parent
